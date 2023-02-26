@@ -1,11 +1,14 @@
-import { Button } from "@mui/material"
+import { CssBaseline, ThemeProvider } from "@mui/material"
+import { RouterProvider } from "react-router-dom"
+import routes from "./routes/routes"
+import { theme } from "./theme/theme"
 
 function App() {
-  return (
-    <div>
-      Hello evento
-      <Button variant="contained"> Evento</Button>
-    </div>
+  return (<ThemeProvider theme={theme}>
+    <CssBaseline />
+    <RouterProvider router={routes} />
+  </ThemeProvider>
+
   )
 }
 
