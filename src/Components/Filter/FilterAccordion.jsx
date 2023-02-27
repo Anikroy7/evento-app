@@ -4,6 +4,12 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Box, Button, Divider } from '@mui/material';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+
+
 
 const FilterAccourding = () => {
     return (
@@ -14,15 +20,51 @@ const FilterAccourding = () => {
                 aria-controls="panel1a-content"
                 id="panel1a-header"
             >
-                <Typography>Accordion 1</Typography>
+                <Box>
+                    <Typography sx={{ paddingY: 1 }} color={'#A6A3A3'} variant='body2'>Guests</Typography>
+                    <Typography variant='body2' fontWeight={500}>2 ADULTS, 1 CHILD</Typography>
+                </Box>
             </AccordionSummary>
+            <Divider />
             <AccordionDetails>
-                <Typography>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                    malesuada lacus ex, sit amet blandit leo lobortis eget.
-                </Typography>
+                <Box py={2} display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
+                    <Typography variant='body2' fontWeight={600}>ADULTS</Typography>
+                    <Box display={'flex'} alignItems='center' gap={2}>
+                        <AddIcon />
+                        <Typography>3</Typography>
+                        <RemoveIcon />
+                    </Box>
+                </Box>
+                <Box py={2} display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
+                    <Typography variant='body2' fontWeight={600}>
+                        CHILDS <br />
+                        <Typography variant='caption' color={'#A6A3A3'}>Age 2-12</Typography>
+                    </Typography>
+                    <Box display={'flex'} alignItems='center' gap={2}>
+                        <AddIcon />
+                        <Typography>3</Typography>
+                        <RemoveIcon />
+                    </Box>
+                </Box>
+                <Box py={2} display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
+                    <Typography variant='body2' fontWeight={600}>
+                        BABIES
+                        <br />
+                        <Typography variant='caption' color={'#A6A3A3'}>Younger than 2</Typography>
+                    </Typography>
+                    <Box display={'flex'} alignItems='center' gap={2}>
+                        <AddIcon />
+                        <Typography>3</Typography>
+                        <RemoveIcon />
+                    </Box>
+                </Box>
+                <Box textAlign={'right'}>
+                    <Button color='success' variant='outlined'
+                        sx={{ height: '30px', width: "30px" }}
+                    >Apply</Button>
+                </Box>
             </AccordionDetails>
-        </Accordion>
+        </Accordion >
 
     );
 }
