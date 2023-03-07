@@ -9,8 +9,31 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { Link as ReactRouterLink } from 'react-router-dom';
+import { Link as MuiLink } from "@mui/material";
 
-const pages = ['Host your home', 'Host your experience', 'Help', 'Login', 'Signup'];
+const pages = [
+    {
+        name: 'Host your home',
+        to: 'home'
+    },
+    {
+        name: 'Host your experience',
+        to: 'experience'
+    },
+    {
+        name: 'help',
+        to: 'help'
+    },
+    {
+        name: 'login',
+        to: 'login'
+    },
+    {
+        name: 'signup',
+        to: 'signup'
+    }
+];
 
 
 function Navbar() {
@@ -28,9 +51,9 @@ function Navbar() {
 
 
     return (
-        <AppBar style={{ background: 'white' }} position="sticky">
+        <AppBar sx={{ paddingY: "20px" }} style={{ background: 'white' }} position="sticky">
             <Container maxWidth="lg">
-                <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Toolbar style={{ display: 'flex', justifyContent: 'space-between', }}>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
@@ -61,9 +84,19 @@ function Navbar() {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
+                            {pages.map(({ name, to }) => (
+                                <MenuItem key={name} onClick={handleCloseNavMenu}>
+                                    <MuiLink component={ReactRouterLink} sx={{
+                                        my: 2, color: '#11998e', display: 'block', fontWeight: "500",
+                                        textDecoration: 'none',
+                                        '&:hover': {
+                                            color: "#06472E",
+                                            cursor: "pointer",
+                                            transition: '1s'
+                                        }
+                                    }} to={`/${to}`} > {name}
+                                    </MuiLink>
+
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -72,7 +105,6 @@ function Navbar() {
                     <Typography
                         variant="h5"
                         noWrap
-                        component="a"
                         href=""
                         sx={{
                             mr: 2,
@@ -80,47 +112,56 @@ function Navbar() {
                             flexGrow: 1,
                             fontFamily: 'monospace',
                             fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'black',
-                            textDecoration: 'none',
+
                         }}
                     >
-                        Evento
+                        <MuiLink sx={{
+                            fontFamily: 'monospace',
+                            fontWeight: 700,
+                            color: '#11998e',
+                            textDecoration: 'none',
+                        }} to='/' component={ReactRouterLink}>Eventoo</MuiLink>
                     </Typography>
                     <Typography
                         variant="h4"
                         noWrap
-                        component="a"
-                        href="/"
-                        sx={{
+
+                    >
+                        <MuiLink sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
                             fontFamily: 'monospace',
                             fontWeight: 700,
-                            color: '#93ff8d',
+                            color: '#11998e',
                             textDecoration: 'none',
-                        }}
-                    >
-                        Evento
+                        }} to='/' component={ReactRouterLink}>Evento</MuiLink>
                     </Typography>
 
 
                     <Box sx={{ display: { xs: 'none', md: 'flex', } }}>
-                        {pages.map((page) => (
-                            <Typography
-                                variant='caption'
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'black', display: 'block', mr: 2, fontWeight: "500" }}
-
-                            >
-                                {page}
-                            </Typography>
+                        {pages.map(({ name, to }) => (
+                            <MuiLink component={ReactRouterLink} sx={{
+                                marginLeft: '5px', color: '#11998e', display: 'block', marginRight: 2, fontWeight: "500",
+                                textDecoration: 'none',
+                                '&:hover': {
+                                    color: "#06472E",
+                                    cursor: "pointer",
+                                    transition: '1s'
+                                }
+                            }} to={`/${to}`} >
+                                <Typography
+                                    variant='caption'
+                                    key={name}
+                                    onClick={handleCloseNavMenu}
+                                >
+                                    {name}
+                                </Typography>
+                            </MuiLink>
                         ))}
                     </Box>
                 </Toolbar>
             </Container>
-        </AppBar>
+        </AppBar >
     );
 }
 export default Navbar;

@@ -18,7 +18,7 @@ const Filter = () => {
                 Where you want to go
             </Typography>
             <Box sx={{ boxShadow: "initial" }}>
-                <Typography sx={{
+                <Stack sx={{
                     fontWeight: 500,
                     padding: 3,
                     boxShadow: "0 4px 6px 1px rgb(2 0 0 / 0.1)",
@@ -29,22 +29,21 @@ const Filter = () => {
                     <TextField id="standard-basic" label="Add City, Landmark or Address." variant="standard"
                         sx={{ width: "100%" }}
                     ></TextField>
-                </Typography>
+                </Stack>
 
             </Box>
-            <Box sx={{ boxShadow: "initial", display: 'flex' }}>
-                <Typography color={'#A6A3A3'} sx={{
+            <Box sx={{ boxShadow: "initial", display: 'flex', width: '100%', flexWrap: 'wrap' }}>
+                <Stack color={'#A6A3A3'} sx={{
                     fontWeight: 500,
                     padding: 2,
                     boxShadow: "0 4px 6px 1px rgb(2 0 0 / 0.1)",
                     borderRadius: '10px',
                     width: '100%',
-
-                }}>
+                }} >
                     Arrival <br />
                     <Input type={'date'} />
-                </Typography>
-                <Typography color={'#A6A3A3'} sx={{
+                </Stack>
+                <Stack color={'#A6A3A3'} sx={{
                     fontWeight: 500,
                     padding: 2,
                     boxShadow: "0 4px 6px 1px rgb(2 0 0 / 0.1)",
@@ -54,7 +53,7 @@ const Filter = () => {
                 }}>
                     Deprature <br />
                     <Input type={'date'} />
-                </Typography>
+                </Stack>
             </Box>
             <FilterAccourding />
 
@@ -63,6 +62,8 @@ const Filter = () => {
                 borderRadius: '5px',
                 '&:hover': {
                     background: "linear-gradient(to right, #38ef7d,#11998e)",
+                    transition: '1s',
+                    cursor: "pointer",
                 },
             }} padding={2}
             >

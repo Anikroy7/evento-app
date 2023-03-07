@@ -2,8 +2,6 @@ import { Box } from '@mui/material';
 import React from 'react';
 import Navbar from '../../Components/Navbar/Navbar';
 import Grid from '@mui/material/Grid';
-import styled from 'styled-components';
-import Paper from '@mui/material/Paper';
 import { Container } from '@mui/system';
 import Filter from '../../Components/Filter/Filter';
 
@@ -11,7 +9,6 @@ import Filter from '../../Components/Filter/Filter';
 const Home = () => {
     return (
         <Box>
-            <Navbar />
 
             {/* Main Section */}
 
