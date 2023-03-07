@@ -140,7 +140,7 @@ function Navbar() {
 
                     <Box sx={{ display: { xs: 'none', md: 'flex', } }}>
                         {pages.map(({ name, to }) => (
-                            <MuiLink component={ReactRouterLink} sx={{
+                            <MuiLink key={name} component={ReactRouterLink} sx={{
                                 marginLeft: '5px', color: '#11998e', display: 'block', marginRight: 2, fontWeight: "500",
                                 textDecoration: 'none',
                                 '&:hover': {
