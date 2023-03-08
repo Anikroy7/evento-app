@@ -8,15 +8,20 @@ import {
     Grid
 } from '@mui/material';
 import useFormData from '../../hooks/useFrormData';
+import { useDispatch } from 'react-redux';
+import { createUser } from '../../features/authSlice';
 
 const SignUp = () => {
     const { formState, updateFormState } = useFormData();
 
+    const dispatch = useDispatch()
 
     // handle submit
     const handleSubmit = (e) => {
         e.preventDefault()
+        const { email, password } = formState;
         console.log(formState);
+        dispatch(createUser({ email, password }))
     }
     return (
         <Container maxWidth="xs">
