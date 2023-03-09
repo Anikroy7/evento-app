@@ -9,7 +9,6 @@ import routes from "./routes/routes"
 import { theme } from "./theme/theme"
 
 function App() {
-
   const dispatch = useDispatch()
 
   useEffect(() => {

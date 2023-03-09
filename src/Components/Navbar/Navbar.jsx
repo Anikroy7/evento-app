@@ -47,7 +47,6 @@ function Navbar() {
     ];
     const [anchorElNav, setAnchorElNav] = React.useState(null);
 
-    console.log(authState);
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
