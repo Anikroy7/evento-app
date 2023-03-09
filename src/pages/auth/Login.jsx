@@ -1,4 +1,5 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux'
 import {
     TextField,
     Button,
@@ -7,16 +8,40 @@ import {
     Link as MuiLink
 } from '@mui/material';
 import useFormData from '../../hooks/useFrormData';
+import { loginUser } from '../../features/authSlice';
+import Loading from '../../Components/utils/Loading';
+import ErrorSnackbar from '../../Components/utils/ErrorSnacbar';
+import { useEffect, useState } from 'react';
+
+
+
 
 const Login = () => {
+    const [state, setState] = useState({
+        open: false,
+        vertical: 'bottom',
+        horizontal: 'right',
+    });
+    const { formState: { email, password }, updateFormState } = useFormData();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { auth: { email: loginEmail, loading, error, errorMsg } } = useSelector(state => state)
 
-    const { formState, updateFormState } = useFormData();
+    useEffect(() => {
+        if (loginEmail) {
+            navigate('/')
+        }
+        if (error && !loading) {
+            setState({ ...state, open: true })
+        }
+
+    }, [loginEmail, error])
 
 
     // handle submit
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(formState);
+        dispatch(loginUser({ email, password }))
     }
     return (
         <Container maxWidth="xs">
@@ -48,8 +73,15 @@ const Login = () => {
                     variant="contained"
                     color="primary"
                     fullWidth
+                    disabled={loading}
                 >
-                    Login
+
+                    {
+                        loading ? <>
+                            <Loading />  Loading...
+                        </> : <>
+                            Login</>
+                    }
                 </Button>
             </form>
             <Typography align="center" mt={2}>
@@ -62,6 +94,13 @@ const Login = () => {
                     Don't have an account? Sign up
                 </MuiLink>
             </Typography>
+
+            {
+                error ? <><ErrorSnackbar
+                    state={state}
+                    message={errorMsg}
+                /> </> : <></>
+            }
         </Container>
     );
 }

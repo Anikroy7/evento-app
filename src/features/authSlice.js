@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import auth from "../../firebase.init";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { async } from "@firebase/util";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import useActionTypes from "../hooks/useBuilder";
 
 const initialState = {
     email: '',
@@ -16,6 +16,10 @@ export const createUser = createAsyncThunk('createUser', async ({ email, passwor
 })
 
 
+export const loginUser = createAsyncThunk('loginUser', async ({ email, password }) => {
+    const user = await signInWithEmailAndPassword(auth, email, password)
+    return user.user.email;
+})
 
 
 
@@ -24,29 +28,40 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         setUser: (state, action) => {
-            state.email = action.payload
+            state.email = action.payload;
+            state.loading = false
+        },
+        logout: (state) => {
+            state.email = '';
+            state.loading = false
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(createUser.fulfilled, (state, action) => {
-            state.email = action.payload;
-            state.error = false;
-            state.errorMsg = ''
-            state.loading = false
-        })
-        builder.addCase(createUser.pending, (state) => {
-            state.error = false;
-            state.errorMsg = ''
-            state.loading = true
-        })
-        builder.addCase(createUser.rejected, (state, action) => {
-            state.error = true;
-            state.errorMsg = action.error.message
-            state.loading = false
-        })
+
+        const { fulfilled, pending, rejected } = useActionTypes()
+
+        builder
+            .addCase(createUser.pending, (state) => {
+                pending(state)
+            })
+            .addCase(createUser.fulfilled, (state, action) => {
+                fulfilled(state, action)
+            })
+            .addCase(createUser.rejected, (state, action) => {
+                rejected(state, action)
+            })
+            .addCase(loginUser.pending, (state) => {
+                pending(state)
+            })
+            .addCase(loginUser.fulfilled, (state, action) => {
+                fulfilled(state, action)
+            })
+            .addCase(loginUser.rejected, (state, action) => {
+                rejected(state, action)
+            })
     }
 })
 
-export const { setUser } = authSlice.actions;
+export const { setUser, logout } = authSlice.actions;
 
 export default authSlice.reducer;

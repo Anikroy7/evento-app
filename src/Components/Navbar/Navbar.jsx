@@ -11,35 +11,43 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { Link as MuiLink } from "@mui/material";
+import { useSelector, useDispatch } from 'react-redux'
+import { signOut } from 'firebase/auth';
+import { logout } from '../../features/authSlice';
+import auth from '../../../firebase.init';
 
-const pages = [
-    {
-        name: 'Host your home',
-        to: 'home'
-    },
-    {
-        name: 'Host your experience',
-        to: 'experience'
-    },
-    {
-        name: 'help',
-        to: 'help'
-    },
-    {
-        name: 'login',
-        to: 'login'
-    },
-    {
-        name: 'signup',
-        to: 'signup'
-    }
-];
+
+
 
 
 function Navbar() {
+    const { auth: authState } = useSelector((state) => state);
+    const dispatch = useDispatch();
+    const pages = [
+        {
+            name: 'Host your home',
+            to: 'home'
+        },
+        {
+            name: 'Host your experience',
+            to: 'experience'
+        },
+        {
+            name: 'help',
+            to: 'help'
+        },
+        {
+            name: authState.email ? 'Logout' : 'Login',
+            to: authState.email ? '' : 'login'
+        },
+        {
+            name: authState.email ? "" : 'signup',
+            to: 'signup'
+        }
+    ];
     const [anchorElNav, setAnchorElNav] = React.useState(null);
 
-
+    console.log(authState);
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -47,6 +55,22 @@ function Navbar() {
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
+
+    const handleLogout = (name) => {
+        if (name === 'Logout') {
+            signOut(auth)
+                .then(() => {
+                    dispatch(logout())
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+
+    }
+
+
+
 
 
 
@@ -94,7 +118,9 @@ function Navbar() {
                                             cursor: "pointer",
                                             transition: '1s'
                                         }
-                                    }} to={`/${to}`} > {name}
+                                    }} to={`/${to}`}
+
+                                    > {name}
                                     </MuiLink>
 
                                 </MenuItem>
@@ -120,7 +146,7 @@ function Navbar() {
                             fontWeight: 700,
                             color: '#11998e',
                             textDecoration: 'none',
-                        }} to='/' component={ReactRouterLink}>Eventoo</MuiLink>
+                        }} to='/' component={ReactRouterLink}>Evento</MuiLink>
                     </Typography>
                     <Typography
                         variant="h4"
@@ -152,7 +178,7 @@ function Navbar() {
                                 <Typography
                                     variant='caption'
                                     key={name}
-                                    onClick={handleCloseNavMenu}
+                                    onClick={() => handleLogout(name)}
                                 >
                                     {name}
                                 </Typography>

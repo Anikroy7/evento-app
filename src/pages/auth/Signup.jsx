@@ -1,4 +1,4 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import {
     TextField,
     Button,
@@ -8,23 +8,45 @@ import {
     Grid
 } from '@mui/material';
 import useFormData from '../../hooks/useFrormData';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createUser } from '../../features/authSlice';
+import { useEffect, useState } from 'react';
+import Loading from '../../Components/utils/Loading';
+import ErrorSnackbar from '../../Components/utils/ErrorSnacbar';
 
 const SignUp = () => {
+    const [state, setState] = useState({
+        open: false,
+        vertical: 'bottom',
+        horizontal: 'right',
+    });
     const { formState, updateFormState } = useFormData();
+    const { auth: { email: loginEmail, loading, error, errorMsg } } = useSelector(state => state)
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (loginEmail) {
+            navigate('/')
+        }
+        if (error && !loading) {
+            setState({ ...state, open: true })
+        }
 
-    const dispatch = useDispatch()
+    }, [loginEmail, error])
+
+
+
+
 
     // handle submit
     const handleSubmit = (e) => {
         e.preventDefault()
         const { email, password } = formState;
-        console.log(formState);
         dispatch(createUser({ email, password }))
     }
     return (
         <Container maxWidth="xs">
+
             <Typography variant="h4" align="center" gutterBottom>
                 Sign Up
             </Typography>
@@ -63,7 +85,12 @@ const SignUp = () => {
                     color="primary"
                     fullWidth
                 >
-                    Sign Up
+                    {
+                        loading ? <>
+                            <Loading />  Loading...
+                        </> : <>
+                            Signup</>
+                    }
                 </Button>
             </form>
             <Grid container justifyContent="flex-end">
@@ -73,6 +100,12 @@ const SignUp = () => {
                     </MuiLink>
                 </Grid>
             </Grid>
+            {
+                error ? <><ErrorSnackbar
+                    state={state}
+                    message={errorMsg}
+                /> </> : <></>
+            }
         </Container >
     );
 }
