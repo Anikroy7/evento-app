@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import useFormData from '../../hooks/useFrormData';
 import { useDispatch, useSelector } from 'react-redux';
-import { createUser } from '../../features/authSlice';
+import { createUser } from '../../features/auth/authSlice';
 import { useEffect, useState } from 'react';
 import Loading from '../../Components/utils/Loading';
 import ErrorSnackbar from '../../Components/utils/ErrorSnacbar';

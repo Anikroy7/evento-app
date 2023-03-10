@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { RouterProvider } from "react-router-dom"
 import auth from "../firebase.init"
-import { setUser } from "./features/authSlice"
+import { setUser } from "./features/auth/authSlice"
 import routes from "./routes/routes"
 import { theme } from "./theme/theme"
 

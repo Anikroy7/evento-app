@@ -13,8 +13,8 @@ import { Link as ReactRouterLink } from 'react-router-dom';
 import { Link as MuiLink } from "@mui/material";
 import { useSelector, useDispatch } from 'react-redux'
 import { signOut } from 'firebase/auth';
-import { logout } from '../../features/authSlice';
 import auth from '../../../firebase.init';
+import { logout } from '../../features/auth/authSlice';
 
 
 
@@ -67,11 +67,6 @@ function Navbar() {
         }
 
     }
-
-
-
-
-
 
     return (
         <AppBar sx={{ paddingY: "20px" }} style={{ background: 'white' }} position="sticky">

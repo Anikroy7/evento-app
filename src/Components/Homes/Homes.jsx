@@ -7,7 +7,6 @@ import CardItem from '../CardItem/CardItem';
 const Homes = () => {
 
     const { data, isLoading } = useGetHomesQuery()
-    console.log(data);
     return (
         <>
             <Typography variant='h6' sx={{ mb: 1 }}>
@@ -18,7 +17,6 @@ const Homes = () => {
                 isLoading ? <ItemSkeleton loading={true} /> : <Box container mx={'auto'} sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, px: 3 }}>
                     {
                         data?.data?.slice(0, 3).map(({ attributes, id }) => {
-                            console.log(attributes, id);
                             return <CardItem name={'Experience'} key={id} data={attributes} />
                         })
                     }

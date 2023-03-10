@@ -8,7 +8,7 @@ import {
     Link as MuiLink
 } from '@mui/material';
 import useFormData from '../../hooks/useFrormData';
-import { loginUser } from '../../features/authSlice';
+import { loginUser } from '../../features/auth/authSlice';
 import Loading from '../../Components/utils/Loading';
 import ErrorSnackbar from '../../Components/utils/ErrorSnacbar';
 import { useEffect, useState } from 'react';

@@ -1,19 +1,18 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import { Box } from '@mui/system';
 
 const CardItem = ({ data }) => {
-    console.log(data);
+
     const { address, category, image, price, title } = data
 
     const getImage = image.data.attributes.formats.thumbnail.url;
-    console.log(`${import.meta.env.VITE_IMAGE_URL}/${getImage}`);
+
     return (
-        <Card sx={{ maxWidth: '250px', width: 'auto', px: 1 }}>
+        <Card sx={{ maxWidth: '250px', width: 'auto', px: 1, minWidth: '250px' }}>
             <CardActionArea>
                 <CardMedia
                     component="img"

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import auth from "../../firebase.init";
+import auth from "../../../firebase.init";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import useActionTypes from "../hooks/useBuilder";
+import useActionTypes from "../../hooks/useBuilder";
 
 const initialState = {
     email: '',

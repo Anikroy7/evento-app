@@ -1,6 +1,7 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
 import React from 'react';
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'; import { Container } from '@mui/system';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import { Container } from '@mui/system';
 import Filter from '../../Components/Filter/Filter';
 import { useGetExperienceQuery } from '../../features/api/experienceApi';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -18,7 +19,6 @@ const Home = () => {
         setHidden(event.target.checked);
     };
 
-    console.log(data);
 
     return (
         <Box sx={{ py: 2 }}>
@@ -26,9 +26,8 @@ const Home = () => {
             {/* Main Section */}
 
             {/* filter Section */}
-            <Container maxWidth="xl" sx={{ paddingY: 2, display: 'flex', alignItems: 'center', display: { lg: 'none' } }}>
+            <Container maxWidth="xl" sx={{ paddingY: 2, display: 'flex', alignItems: 'center', display: { lg: 'none' } }} >
                 <FormControlLabel
-
                     control={
                         <Switch checked={hidden} onChange={handleHiddenChange} color="primary" />
                     }
@@ -36,7 +35,7 @@ const Home = () => {
                 />
                 <FilterListIcon />
             </Container>
-            <Stack container mx={'auto'} spacing={2} sx={{
+            <Stack container={hidden.toString()} mx={'auto'} spacing={2} sx={{
                 display: 'flex',
                 flexDirection: { md: "row", sm: "column", lg: 'row' },
             }}>
