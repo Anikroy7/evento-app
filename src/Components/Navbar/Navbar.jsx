@@ -110,7 +110,7 @@ function Navbar() {
                             {pages.map(({ name, to }) => (
                                 <MenuItem key={name} onClick={handleCloseNavMenu}>
                                     <MuiLink component={ReactRouterLink} sx={{
-                                        my: 2, color: '#11998e', display: 'block', fontWeight: "500",
+                                        my: 2, display: 'block', fontWeight: "500",
                                         textDecoration: 'none',
                                         '&:hover': {
                                             color: "#06472E",
@@ -166,7 +166,7 @@ function Navbar() {
                     <Box sx={{ display: { xs: 'none', md: 'flex', } }}>
                         {pages.map(({ name, to }) => (
                             <MuiLink key={name} component={ReactRouterLink} sx={{
-                                marginLeft: '5px', color: '#11998e', display: 'block', marginRight: 2, fontWeight: "500",
+                                marginLeft: '5px', display: 'block', marginRight: 2, fontWeight: "500",
                                 textDecoration: 'none',
                                 '&:hover': {
                                     color: "#06472E",
@@ -175,7 +175,8 @@ function Navbar() {
                                 }
                             }} to={`/${to}`} >
                                 <Typography
-                                    variant='caption'
+                                    variant='body2'
+                                    fontWeight={500}
                                     key={name}
                                     onClick={() => handleLogout(name)}
                                 >
