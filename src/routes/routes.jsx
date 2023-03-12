@@ -3,6 +3,7 @@ import Home from "../pages/Home/Home";
 import Main from "../pages/Main/Main";
 import Signup from "../pages/auth/Signup";
 import Login from "../pages/auth/Login";
+import SearchPage from "../pages/SearchPage/SearchPage";
 
 const routes = createBrowserRouter(
     [
@@ -21,6 +22,10 @@ const routes = createBrowserRouter(
                 {
                     path: '/login',
                     element: <Login />
+                },
+                {
+                    path: '/searchPage',
+                    element: <SearchPage />
                 }
             ]
         },

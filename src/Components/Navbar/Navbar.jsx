@@ -9,19 +9,25 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { Link as ReactRouterLink } from 'react-router-dom';
-import { Link as MuiLink } from "@mui/material";
+import { Link as ReactRouterLink, useLocation } from 'react-router-dom';
+import { Link as MuiLink, Paper } from "@mui/material";
 import { useSelector, useDispatch } from 'react-redux'
 import { signOut } from 'firebase/auth';
 import auth from '../../../firebase.init';
 import { logout } from '../../features/auth/authSlice';
+import { display, Stack } from '@mui/system';
+import isEmpty from '../utils/isEmpty';
 
 
 
 
 
 function Navbar() {
-    const { auth: authState } = useSelector((state) => state);
+    const { auth: authState, filter } = useSelector((state) => state);
+
+    const location = useLocation();
+    const pathname = location.pathname;
+    const { address, arrivalDate, depratureDate, guests } = filter;
     const dispatch = useDispatch();
     const pages = [
         {
@@ -45,8 +51,16 @@ function Navbar() {
             to: 'signup'
         }
     ];
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
 
+    const [anchorElNav, setAnchorElNav] = React.useState(null);
+    const isBlank = isEmpty(guests);
+
+    // formated Date
+    let formatedDate;
+    if (!isBlank) {
+        formatedDate = `${new Date(depratureDate).toLocaleString('default', { month: 'long' })
+            } ${new Date(arrivalDate).getDate()}-${new Date(depratureDate).getDate()}`
+    }
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -102,6 +116,7 @@ function Navbar() {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
+
                             {pages.map(({ name, to }) => (
                                 <MenuItem key={name} onClick={handleCloseNavMenu}>
                                     <MuiLink component={ReactRouterLink} sx={{
@@ -112,7 +127,7 @@ function Navbar() {
                                             cursor: "pointer",
                                             transition: '1s'
                                         }
-                                    }} to={`/${to}`}
+                                    }} to={`/ ${to} `}
 
                                     > {name}
                                     </MuiLink>
@@ -159,16 +174,40 @@ function Navbar() {
 
 
                     <Box sx={{ display: { xs: 'none', md: 'flex', } }}>
+
+                        {(!isBlank) && (pathname !== '/') && <Stack Stack sx={{
+                            color: 'black',
+                            display: 'flex',
+                            flexDirection: 'row',
+                            gap: 2
+                        }}>
+                            <Paper sx={{ paddingX: 2, paddingY: 1 }}>
+                                {address}
+                            </Paper>
+                            <Paper sx={{ paddingX: 2, paddingY: 1 }}>
+                                {formatedDate}
+                            </Paper>
+                            <Paper sx={{ paddingX: 2, paddingY: 1 }}>
+                                3 Guests
+                            </Paper>
+
+                        </Stack>}
+
                         {pages.map(({ name, to }) => (
-                            <MuiLink key={name} component={ReactRouterLink} sx={{
-                                marginLeft: '5px', display: 'block', marginRight: 2, fontWeight: "500",
+                            <MuiLink display={'none'} key={name} component={ReactRouterLink} sx={{
+                                marginLeft: '5px',
+                                marginRight: 2,
+                                fontWeight: "500",
                                 textDecoration: 'none',
                                 '&:hover': {
                                     color: "#06472E",
                                     cursor: "pointer",
                                     transition: '1s'
-                                }
-                            }} to={`/${to}`} >
+                                },
+
+                                display: (!isBlank && pathname !== '/') ? "none" : "block"
+
+                            }} to={`/ ${to} `} >
                                 <Typography
                                     variant='body2'
                                     fontWeight={500}

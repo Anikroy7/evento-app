@@ -6,25 +6,39 @@ import TextField from '@mui/material/TextField';
 import Input from '@mui/material/Input';
 import FilterAccourding from './FilterAccordion';
 import SearchIcon from '@mui/icons-material/Search';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from "react-hook-form"
 import { searchedData } from '../../features/filter/filterSlice';
-
+import useFormValidation from '../../hooks/useFormValidation';
+import { useNavigate } from 'react-router-dom';
+import isEmpty from '../utils/isEmpty';
 
 
 const Filter = () => {
-    const [guestsState, setGuestsState] = React.useState({
-        adults: 0,
-        childs: 0,
-        babies: 0,
-    })
 
+    const { filter } = useSelector((state) => state);
+
+    const { address, arrivalDate, depratureDate, guests } = filter;
     const dispatch = useDispatch();
+    const navigate = useNavigate()
+    const isBlank = isEmpty(guests)
 
-    const { register, handleSubmit, formState } = useForm()
+    const { register, handleSubmit } = useForm()
 
     const onSubmit = (data) => {
-        dispatch(searchedData({ ...data, ...guestsState }))
+        const { dateError } = useFormValidation(data);
+
+        if (dateError) {
+            alert(dateError);
+            return
+        }
+
+        if (isBlank) {
+            alert('Please add quantity to guest');
+            return
+        }
+        dispatch(searchedData({ ...data, guests: { ...guests } }))
+        navigate('/searchPage')
     };
 
     return (
@@ -47,10 +61,10 @@ const Filter = () => {
                             label="Add City, Landmark or Address."
                             variant="standard"
                             sx={{ width: "100%" }}
-                            {...register("address")}
+                            {...register("address", { required: true })}
+                            defaultValue={address}
                         ></TextField>
                     </Stack>
-
                 </Box>
                 <Box sx={{ boxShadow: "initial", display: 'flex', width: '100%', flexWrap: 'wrap' }}>
                     <Stack color={'#A6A3A3'} sx={{
@@ -64,6 +78,7 @@ const Filter = () => {
                         <Input
                             type={'date'}
                             {...register("arrivalDate")}
+                            defaultValue={arrivalDate}
                         />
                     </Stack>
                     <Stack
@@ -80,12 +95,13 @@ const Filter = () => {
                         <Input
                             type={'date'}
                             {...register("depratureDate")}
+                            defaultValue={depratureDate}
+
                         />
                     </Stack>
                 </Box>
                 <FilterAccourding
-                    setGuestsState={setGuestsState}
-                    guestsState={guestsState}
+                    isBlanks={isBlank}
                 />
 
                 <Stack
@@ -101,7 +117,6 @@ const Filter = () => {
                         alignItems='center'
                         justifyContent={'center'}
                         width={'100%'}
-
                         sx={{
                             background: "linear-gradient(to right, #11998e, #38ef7d)", border: "none", boxShadow: "0 4px 6px 1px rgb(2 0 0 / 0.1)",
                             borderRadius: '5px',
@@ -114,7 +129,6 @@ const Filter = () => {
                         padding={2}
                     />
                     <SearchIcon
-
                         sx={{
                             position: 'absolute',
                             left: 225,

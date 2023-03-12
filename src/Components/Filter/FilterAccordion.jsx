@@ -4,42 +4,26 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Box, Button, Divider } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { toogleGuestQuantity } from '../../features/filter/filterSlice';
 
 
 
-const FilterAccourding = ({ setGuestsState, guestsState }) => {
 
-    /*  const { data } = useSelector((state) => state.filter)
-     console.log(data); */
+const FilterAccourding = ({ isBlanks }) => {
+    const dispatch = useDispatch()
 
-    const { babies, adults, childs } = guestsState;
-    console.log(babies, adults, childs);
+    const { filter: { guests } } = useSelector(state => state)
+    const { childs, babies, adults } = guests
+
     const toggleQuantity = (type, name) => {
-        switch (type) {
-            case '+':
-                setGuestsState({
-                    ...guestsState,
-                    [name]: guestsState[name] + 1
-                })
-                break;
-            case '-':
-                if (guestsState[name] > 0) {
-                    setGuestsState({
-                        ...guestsState,
-                        [name]: guestsState[name] - 1
-                    })
-                }
-                break;
-            default:
-                guestsState;
-                break;
-        }
+        dispatch(toogleGuestQuantity({ name, type }))
     }
-    console.log(Object.values(guestsState).every(i => i === 0));
+
+
     return (
 
         <Accordion sx={{ boxShadow: "0 4px 6px 1px rgb(2 0 0 / 0.1)", borderRadius: '10px', mt: 3 }}>
@@ -51,12 +35,11 @@ const FilterAccourding = ({ setGuestsState, guestsState }) => {
                 <Box>
                     <Typography sx={{ paddingY: 1 }} color={'#A6A3A3'} variant='body2'>Guests</Typography>
                     <Typography variant='body2' fontWeight={500}>
-                        {Object.values(guestsState).every(i => i === 0) ? "Please select guests..." : <>
+                        {isBlanks ? "Please select guests..." : <>
                             {adults ? `${adults} ADULTS, ` : ''}
                             {childs ? `${childs} CHILDS, ` : ''}
                             {babies ? `${babies} BABIES` : ''}
                         </>}
-
 
                     </Typography>
                 </Box>
@@ -70,7 +53,7 @@ const FilterAccourding = ({ setGuestsState, guestsState }) => {
                         <RemoveIcon
                             onClick={() => toggleQuantity('-', 'adults')}
                         />
-                        <Typography>{guestsState.adults}</Typography>
+                        <Typography>{adults}</Typography>
                         <AddIcon
                             onClick={() => toggleQuantity('+', 'adults')}
                         />
@@ -85,7 +68,7 @@ const FilterAccourding = ({ setGuestsState, guestsState }) => {
                         <RemoveIcon
                             onClick={() => toggleQuantity('-', 'childs')}
                         />
-                        <Typography>{guestsState.childs}</Typography>
+                        <Typography>{childs}</Typography>
                         <AddIcon
                             onClick={() => toggleQuantity('+', 'childs')}
                         />
@@ -101,16 +84,11 @@ const FilterAccourding = ({ setGuestsState, guestsState }) => {
                         <RemoveIcon
                             onClick={() => toggleQuantity('-', 'babies')}
                         />
-                        <Typography>{guestsState.babies}</Typography>
+                        <Typography>{babies}</Typography>
                         <AddIcon
                             onClick={() => toggleQuantity('+', 'babies')}
                         />
                     </Box>
-                </Box>
-                <Box textAlign={'right'}>
-                    <Button color='success' variant='outlined'
-                        sx={{ height: '30px', width: "30px" }}
-                    >Apply</Button>
                 </Box>
             </AccordionDetails>
         </Accordion >

@@ -1,29 +1,22 @@
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import React from 'react';
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import { Container } from '@mui/system';
 import Filter from '../../Components/Filter/Filter';
-import { useGetExperienceQuery } from '../../features/api/experienceApi';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import FilterListIcon from '@mui/icons-material/FilterList';
-
 import Experiences from '../../Components/Experiences/Experiences';
 import Homes from '../../Components/Homes/Homes';
 
 const Home = () => {
-    const { isError, isLoading, isSuccess, data } = useGetExperienceQuery();
 
     const [hidden, setHidden] = React.useState(true);
     const handleHiddenChange = (event) => {
         setHidden(event.target.checked);
     };
 
-
     return (
-        <Box sx={{ py: 2 }}>
-
-            {/* Main Section */}
+        <Box sx={{ py: 2 }} width="100%" mx={'auto'}>
 
             {/* filter Section */}
             <Container maxWidth="xl" sx={{ paddingY: 2, display: 'flex', alignItems: 'center', display: { lg: 'none' } }} >
@@ -44,6 +37,7 @@ const Home = () => {
                 </Box>
 
                 <Stack>
+
                     {/*Experience Items */}
 
                     <Box>
@@ -56,6 +50,7 @@ const Home = () => {
                     <Box>
                         <Homes />
                     </Box>
+
                 </Stack>
 
             </Stack >
