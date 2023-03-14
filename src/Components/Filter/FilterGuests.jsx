@@ -8,12 +8,13 @@ import { Box, Divider } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useDispatch, useSelector } from 'react-redux';
-import { toogleGuestQuantity } from '../../features/filter/filterSlice';
+import { removeFilter, toogleGuestQuantity } from '../../features/filter/filterSlice';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Stack } from '@mui/system';
 
 
 
-
-const FilterAccourding = ({ isBlanks }) => {
+const FilterGuests = ({ isBlanks }) => {
     const dispatch = useDispatch()
 
     const { filter: { guests } } = useSelector(state => state)
@@ -24,6 +25,9 @@ const FilterAccourding = ({ isBlanks }) => {
     }
 
 
+    const handleRemoveFilter = () => {
+        dispatch(removeFilter())
+    }
     return (
 
         <Accordion sx={{ boxShadow: "0 4px 6px 1px rgb(2 0 0 / 0.1)", borderRadius: '10px', mt: 3 }}>
@@ -33,7 +37,15 @@ const FilterAccourding = ({ isBlanks }) => {
                 id="panel1a-header"
             >
                 <Box>
-                    <Typography sx={{ paddingY: 1 }} color={'#A6A3A3'} variant='body2'>Guests</Typography>
+                    <Stack sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-betweenz   z   ' }}>
+
+                        <Typography sx={{ paddingY: 1 }} color={'#A6A3A3'} variant='body2'>
+                            Guests
+                        </Typography>
+
+
+
+                    </Stack>
                     <Typography variant='body2' fontWeight={500}>
                         {isBlanks ? "Please select guests..." : <>
                             {adults ? `${adults} ADULTS, ` : ''}
@@ -46,6 +58,9 @@ const FilterAccourding = ({ isBlanks }) => {
             </AccordionSummary>
             <Divider />
             <AccordionDetails>
+                <Box onClick={handleRemoveFilter} sx={{ textAlign: 'right' }}>
+                    <DeleteIcon />
+                </Box>
                 <Box py={2} display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
                     <Typography variant='body2' fontWeight={600}>ADULTS</Typography>
                     <Box display={'flex'} alignItems='center' gap={2}>
@@ -96,4 +111,4 @@ const FilterAccourding = ({ isBlanks }) => {
     );
 }
 
-export default FilterAccourding;
+export default FilterGuests;

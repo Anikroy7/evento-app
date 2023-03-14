@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { signOut } from 'firebase/auth';
 import auth from '../../../firebase.init';
 import { logout } from '../../features/auth/authSlice';
-import { display, Stack } from '@mui/system';
+import { Stack } from '@mui/system';
 import isEmpty from '../utils/isEmpty';
 
 
@@ -28,6 +28,7 @@ function Navbar() {
     const location = useLocation();
     const pathname = location.pathname;
     const { address, arrivalDate, depratureDate, guests } = filter;
+    const { childs, babies, adults } = guests
     const dispatch = useDispatch();
     const pages = [
         {
@@ -47,7 +48,7 @@ function Navbar() {
             to: authState.email ? '' : 'login'
         },
         {
-            name: authState.email ? "" : 'signup',
+            name: authState.email ? "" : 'Signup',
             to: 'signup'
         }
     ];
@@ -81,6 +82,8 @@ function Navbar() {
         }
 
     }
+
+    const totalGuests = adults + babies + childs;
 
     return (
         <AppBar sx={{ paddingY: "20px" }} style={{ background: 'white' }} position="sticky">
@@ -127,7 +130,7 @@ function Navbar() {
                                             cursor: "pointer",
                                             transition: '1s'
                                         }
-                                    }} to={`/ ${to} `}
+                                    }} to={`/${to}`}
 
                                     > {name}
                                     </MuiLink>
@@ -179,7 +182,8 @@ function Navbar() {
                             color: 'black',
                             display: 'flex',
                             flexDirection: 'row',
-                            gap: 2
+                            gap: 2,
+                            marginRight: 3
                         }}>
                             <Paper sx={{ paddingX: 2, paddingY: 1 }}>
                                 {address}
@@ -188,13 +192,13 @@ function Navbar() {
                                 {formatedDate}
                             </Paper>
                             <Paper sx={{ paddingX: 2, paddingY: 1 }}>
-                                3 Guests
+                                {totalGuests} Guests
                             </Paper>
 
                         </Stack>}
 
                         {pages.map(({ name, to }) => (
-                            <MuiLink display={'none'} key={name} component={ReactRouterLink} sx={{
+                            <MuiLink key={name} component={ReactRouterLink} sx={{
                                 marginLeft: '5px',
                                 marginRight: 2,
                                 fontWeight: "500",
@@ -205,9 +209,9 @@ function Navbar() {
                                     transition: '1s'
                                 },
 
-                                display: (!isBlank && pathname !== '/') ? "none" : "block"
+                                display: (!isBlank && pathname !== '/' && name !== 'help' && name !== 'Login' && name !== 'Signup' && name !== 'Logout') ? "none" : "block"
 
-                            }} to={`/ ${to} `} >
+                            }} to={`/${to}`} >
                                 <Typography
                                     variant='body2'
                                     fontWeight={500}

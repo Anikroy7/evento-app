@@ -4,7 +4,6 @@ import Typography from '@mui/material/Typography';
 import { Box, Stack } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Input from '@mui/material/Input';
-import FilterAccourding from './FilterAccordion';
 import SearchIcon from '@mui/icons-material/Search';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from "react-hook-form"
@@ -12,7 +11,7 @@ import { searchedData } from '../../features/filter/filterSlice';
 import useFormValidation from '../../hooks/useFormValidation';
 import { useNavigate } from 'react-router-dom';
 import isEmpty from '../utils/isEmpty';
-
+import FilterGuests from './FilterGuests';
 
 const Filter = () => {
 
@@ -24,6 +23,7 @@ const Filter = () => {
     const isBlank = isEmpty(guests)
 
     const { register, handleSubmit } = useForm()
+
 
     const onSubmit = (data) => {
         const { dateError } = useFormValidation(data);
@@ -41,11 +41,19 @@ const Filter = () => {
         navigate('/searchPage')
     };
 
+
+
+
     return (
         <Container>
-            <Typography variant='h6' fontWeight={600} fontSize={'16px'} mb={2}>
-                Where you want to go
-            </Typography>
+            <Box sx={{
+                display: 'flex',
+                justifyContent: 'space-between'
+            }}>
+                <Typography variant='h6' fontWeight={600} fontSize={'16px'} mb={2}>
+                    Where you want to go
+                </Typography>
+            </Box>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Box sx={{ boxShadow: "initial" }}>
                     <Stack sx={{
@@ -100,7 +108,7 @@ const Filter = () => {
                         />
                     </Stack>
                 </Box>
-                <FilterAccourding
+                <FilterGuests
                     isBlanks={isBlank}
                 />
 

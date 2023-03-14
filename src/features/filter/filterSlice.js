@@ -29,17 +29,24 @@ const filterSlice = createSlice({
                 case '-':
                     console.log();
                     if (state.guests[action.payload.name] > 0) state.guests[action.payload.name]--
-
                 default:
                     state
                     break;
             }
 
+        },
+        removeFilter: (state) => {
+            state.address = '';
+            state.arrivalDate = '';
+            state.depratureDate = '';
+            state.guests.adults = 0;
+            state.guests.childs = 0;
+            state.guests.babies = 0;
         }
 
     }
 })
 
-export const { searchedData, toogleGuestQuantity } = filterSlice.actions
+export const { searchedData, toogleGuestQuantity, removeFilter } = filterSlice.actions
 
 export default filterSlice.reducer
