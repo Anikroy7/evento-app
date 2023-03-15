@@ -44,19 +44,18 @@ const HomeDetailsDescription = ({ data }) => {
           {thirdSlice} .
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
+      <CardActions  expand={expanded}
+          onClick={handleExpandClick} disableSpacing>
         <Typography
-          expand={expanded}
-          onClick={handleExpandClick}
+         
           fontWeight={500}
           color={"#38ef7d"}
           sx={{cursor:'pointer'}}
         >
           Read more about the space
         </Typography>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
+        <ExpandMore      
+         expand={expanded}
           aria-expanded={expanded}
           aria-label="show more"
         >
@@ -65,7 +64,7 @@ const HomeDetailsDescription = ({ data }) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography color="text.secondary" paragraph>{finalSlice}</Typography>
+          <Typography color="text.secondary" paragraph>{finalSlice}.</Typography>
         </CardContent>
       </Collapse>
     </Card>
