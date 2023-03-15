@@ -1,18 +1,25 @@
-import * as React from 'react';
+import { CardActionArea } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
 import { Box } from '@mui/system';
+import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const CardItem = ({ data }) => {
+const CardItem = ({ data ,homeId}) => {
 
     const { address, category, image, price, title } = data
 
     const getImage = image.data.attributes.formats.thumbnail.url;
+    const navigate = useNavigate()  
+
+    const handleNavigate = ()=>{
+        navigate(`/homeDetails/${homeId}`)
+    }
+
 
     return (
-        <Card sx={{ maxWidth: '250px', width: 'auto', px: 1, minWidth: '250px' }}>
+        <Card onClick={handleNavigate} sx={{ maxWidth: '250px', width: 'auto', px: 1, minWidth: '250px' }}>
             <CardActionArea>
                 <CardMedia
                     component="img"

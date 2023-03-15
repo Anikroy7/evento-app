@@ -22,7 +22,7 @@ const SearchPage = () => {
   }
 
   const filteredData = data?.data?.filter((home) => {
-    return home.attributes.address === address;
+    return home.attributes.address.toLowerCase() === address.toLowerCase();
   });
 
   // formated Date
@@ -32,12 +32,16 @@ const SearchPage = () => {
 
   const totalGuests = adults + babies + childs;
 
-
+  console.log(filteredData);
   return (
     <Stack
       sx={{
-        display: "flex", 
-        flexDirection: {lg:"row", sm:'column-reverse', md:'column-reverse'},
+        display: "flex",
+        flexDirection: {
+          lg: "row",
+          sm: "column-reverse",
+          md: "column-reverse",
+        },
         gap: 2,
       }}
     >
@@ -51,13 +55,18 @@ const SearchPage = () => {
           </Typography>
         </Box>
         <Box>
-          {filteredData.map((item) => (
-            <SearchHomeCard key={item.id} data={item.attributes} />
-          ))}
+          {filteredData.length > 0
+            ? filteredData.map((item) => (
+                <SearchHomeCard key={item.id} homeId={item.id} data={item.attributes} />
+              ))
+            :<Typography mt={2} variant="h6" textAlign={'center'}>
+           No homes available..Search with another one!!!
+          </Typography>
+            }
         </Box>
       </Stack>
 
-      <Box width={"100%"} height={'900px'}>
+      <Box width={"100%"} height={"100vh"}>
         <iframe
           width="100%"
           height="100%"
@@ -68,8 +77,6 @@ const SearchPage = () => {
           id="gmap_canvas"
           src="https://maps.google.com/maps?width=520&amp;height=400&amp;hl=en&amp;q=%20Rajshahi+()&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
         ></iframe>
-
-        {/* <GoogleMap /> */}
       </Box>
     </Stack>
   );

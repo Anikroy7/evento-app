@@ -1,8 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
-import Home from "../pages/Home/Home";
-import Main from "../pages/Main/Main";
-import Signup from "../pages/auth/Signup";
 import Login from "../pages/auth/Login";
+import Signup from "../pages/auth/Signup";
+import Home from "../pages/Home/Home";
+import HomeDetails from "../pages/HomeDetails/HomeDetails";
+import Main from "../pages/Main/Main";
 import SearchPage from "../pages/SearchPage/SearchPage";
 
 const routes = createBrowserRouter(
@@ -26,6 +27,10 @@ const routes = createBrowserRouter(
                 {
                     path: '/searchPage',
                     element: <SearchPage />
+                },
+                {
+                    path: '/homeDetails/:homeId',
+                    element: <HomeDetails />
                 }
             ]
         },
