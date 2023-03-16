@@ -38,7 +38,7 @@ const HomeDetails = () => {
         </Grid>
         <Grid item xs={12} lg={4} md={6}  sm={12}>
           <Stack ml={5} px={3} mt={10}>
-            <ReserveCard data={attributes} key={id}/>
+            <ReserveCard data={attributes} id={id} key={id}/>
           </Stack>
         </Grid>
       </Grid>

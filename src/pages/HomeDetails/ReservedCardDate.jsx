@@ -2,10 +2,12 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { CardContent, Stack, Typography } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
+
+
 const ReservedCardDate = () => {
 
   const {filter:{depratureDate, arrivalDate} } = useSelector(state=> state);
-  // console.log('filter', filter);
+
   return (
     <CardContent>
       <Typography>Dates</Typography>

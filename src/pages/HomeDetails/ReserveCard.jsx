@@ -6,13 +6,13 @@ import ReservedCardDate from "./ReservedCardDate";
 import ReservedCardHeader from "./ReservedCardHeader";
 import ReserverCardGuests from "./ReserverCardGuests";
 
-const ReserveCard = ({ data }) => {
+const ReserveCard = ({ data, id }) => {
   return (
-    <Card sx={{ minWidth: 500 }}>
-      <ReservedCardHeader data={data} />
+    <Card sx={{ minWidth: 400 }}>
+      <ReservedCardHeader data={data} key={id}/>
       <ReservedCardDate />
       <ReserverCardGuests />
-      <ReserveCardTotal/>
+      <ReserveCardTotal data= {data} key={id}/>
       <ReservedButton/>
     </Card>
   );

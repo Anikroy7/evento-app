@@ -1,12 +1,23 @@
 import BookOnlineIcon from '@mui/icons-material/BookOnline';
 import { Stack, Typography } from '@mui/material';
 import React from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 const ReservedButton = () => {
+
+const naviagte = useNavigate()
+const {homeId}= useParams()
+
+const handleReserve=()=>{
+    naviagte(`/checkout/${homeId}`)
+}
+
+
     return (
         <Stack
         position={'relative'}
     >
         <Typography
+        onClick={handleReserve}
             type={'submit'}
             component={'input'}
             display={'flex'}

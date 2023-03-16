@@ -7,6 +7,7 @@ import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
 import * as React from "react";
+import { useSelector } from "react-redux";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -21,6 +22,8 @@ const ExpandMore = styled((props) => {
 
 const ReservedCardGuests = () => {
   const [expanded, setExpanded] = React.useState(false);
+  const { guests:{childs, babies, adults}}= useSelector(state=> state.filter)
+const totalGuests= (childs+babies+ adults)||0
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -29,7 +32,7 @@ const ReservedCardGuests = () => {
   return (
     <Card sx={{ p: 1 }}>
       <CardActions disableSpacing>
-       3 Guests
+       {totalGuests} Guests
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
@@ -45,19 +48,19 @@ const ReservedCardGuests = () => {
           <ListItem disablePadding>
             <ListItemButton>            
               <ListItemText primary="Adults" />
-              <ListItemText primary="3" />
+              <ListItemText primary={adults||0} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
             <ListItemButton>     
               <ListItemText primary="Childs" />
-              <ListItemText primary="3" />
+              <ListItemText primary={childs||0} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
             <ListItemButton>     
               <ListItemText primary="Babies" />
-              <ListItemText primary="2" />
+              <ListItemText primary={babies||0} />
             </ListItemButton>
           </ListItem>
         </List> 
