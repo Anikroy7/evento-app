@@ -41,7 +41,7 @@ const handleReserve=()=>{
         <BookOnlineIcon
             sx={{
                 position: 'absolute',
-                left: 290,
+                left: 240,
                 bottom: 15,
                 color: 'white'
             }}

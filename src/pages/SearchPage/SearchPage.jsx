@@ -34,49 +34,56 @@ const SearchPage = () => {
 
   console.log(filteredData);
   return (
-    <Stack
-      sx={{
-        display: "flex",
-        flexDirection: {
-          lg: "row",
-          sm: "column-reverse",
-          md: "column-reverse",
-        },
-        gap: 2,
-      }}
-    >
-      <Stack width={"100%"}>
-        <Box paddingX={6} paddingY={2}>
-          <Typography component={"span"}>
-            250 Stays {formatedDate} {totalGuests} guests
-          </Typography>
-          <Typography mt={2} variant="h4" fontWeight={600} component={"h6"}>
-            Stay in {address}
-          </Typography>
-        </Box>
-        <Box>
-          {filteredData.length > 0
-            ? filteredData.map((item) => (
-                <SearchHomeCard key={item.id} homeId={item.id} data={item.attributes} />
+    <Stack container maxWidth={"xl"} marginX={"auto"}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: {
+            lg: "row",
+            sm: "column-reverse",
+            md: "column-reverse",
+          },
+          gap: 2,
+        }}
+      >
+        <Stack width={"100%"}>
+          <Box paddingX={6} paddingY={2}>
+            <Typography component={"span"}>
+              250 Stays {formatedDate} {totalGuests} guests
+            </Typography>
+            <Typography mt={2} variant="h4" fontWeight={600} component={"h6"}>
+              Stay in {address}
+            </Typography>
+          </Box>
+          <Box>
+            {filteredData.length > 0 ? (
+              filteredData.map((item) => (
+                <SearchHomeCard
+                  key={item.id}
+                  homeId={item.id}
+                  data={item.attributes}
+                />
               ))
-            :<Typography mt={2} variant="h6" textAlign={'center'}>
-           No homes available..Search with another one!!!
-          </Typography>
-            }
-        </Box>
-      </Stack>
+            ) : (
+              <Typography mt={2} variant="h6" textAlign={"center"}>
+                No homes available..Search with another one!!!
+              </Typography>
+            )}
+          </Box>
+        </Stack>
 
-      <Box width={"100%"} height={"100vh"}>
-        <iframe
-          width="100%"
-          height="100%"
-          frameborder="0"
-          scrolling="no"
-          marginheight="0"
-          marginwidth="0"
-          id="gmap_canvas"
-          src="https://maps.google.com/maps?width=520&amp;height=400&amp;hl=en&amp;q=%20Rajshahi+()&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-        ></iframe>
+        <Box sx={{display:{sm:'none', xs:'none', lg:'block', xl:"block", md:'block'}}} width={"100%"} height={"100vh"}>
+          <iframe
+            width="100%"
+            height="100%"
+            frameborder="0"
+            scrolling="no"
+            marginheight="0"
+            marginwidth="0"
+            id="gmap_canvas"
+            src="https://maps.google.com/maps?width=520&amp;height=400&amp;hl=en&amp;q=%20Rajshahi+()&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+          ></iframe>
+        </Box>
       </Box>
     </Stack>
   );

@@ -1,11 +1,11 @@
+import FilterListIcon from '@mui/icons-material/FilterList';
 import { Box, Stack } from '@mui/material';
-import React from 'react';
-import { Container } from '@mui/system';
-import Filter from '../../Components/Filter/Filter';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import FilterListIcon from '@mui/icons-material/FilterList';
+import { Container } from '@mui/system';
+import React from 'react';
 import Experiences from '../../Components/Experiences/Experiences';
+import Filter from '../../Components/Filter/Filter';
 import Homes from '../../Components/Homes/Homes';
 
 const Home = () => {
@@ -16,7 +16,7 @@ const Home = () => {
     };
 
     return (
-        <Box sx={{ py: 2 }} width="100%" mx={'auto'}>
+        <Stack container maxWidth={"xl"} marginX={"auto"}>
 
             {/* filter Section */}
             <Container maxWidth="xl" sx={{ paddingY: 2, display: 'flex', alignItems: 'center', display: { lg: 'none' } }} >
@@ -57,7 +57,7 @@ const Home = () => {
 
 
 
-        </Box >
+        </Stack >
     );
 };
 

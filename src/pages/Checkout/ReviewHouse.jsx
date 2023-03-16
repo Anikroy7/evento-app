@@ -22,10 +22,12 @@ const ReviewHouse = ({ handleNext }) => {
   if (isLoading) {
     return <Loading />;
   }
+
+  const { id, attributes } = data.data;
   
   return (
-    <Grid container >
-      <Grid item xs={12} sm={12} md={6} lg={8} xl={4} mt={3} py={3}>
+    <Grid container spacing={4}>
+      <Grid item xs={12} sm={12} md={6} lg={8} xl={8} mt={3} py={3}>
         <Typography variant="h4" component={"h4"} fontWeight={500}>
           Review house rules
         </Typography>
@@ -192,8 +194,8 @@ const ReviewHouse = ({ handleNext }) => {
           />
         </Box>
       </Grid>
-      <Grid item xs={12} sm={12} md={6} lg={4} xl={4} mt={3} py={3}>        
-        <ReserveCard data={data}/>
+      <Grid item xs={12} sm={12} md={6} lg={4} xl={4} mt={3} py={3}>      
+        <ReserveCard data={attributes} key={id}/>
       </Grid>
     </Grid>
   );
