@@ -3,14 +3,14 @@ import { Box, Stack } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { Container } from '@mui/system';
-import React from 'react';
+import React, { useState } from 'react';
 import Experiences from '../../Components/Experiences/Experiences';
 import Filter from '../../Components/Filter/Filter';
 import Homes from '../../Components/Homes/Homes';
 
 const Home = () => {
-
-    const [hidden, setHidden] = React.useState(true);
+// let comingsoon="false"
+    const [hidden, setHidden] = useState(true);
     const handleHiddenChange = (event) => {
         setHidden(event.target.checked);
     };
@@ -24,11 +24,12 @@ const Home = () => {
                     control={
                         <Switch checked={hidden} onChange={handleHiddenChange} color="primary" />
                     }
+                    container="true" 
                     label="Filter"
                 />
                 <FilterListIcon />
             </Container>
-            <Stack container={hidden.toString()} mx={'auto'} spacing={2} sx={{
+            <Stack  mx={'auto'} spacing={2} sx={{
                 display: 'flex',
                 flexDirection: { md: "row", sm: "column", lg: 'row' },
             }}>
@@ -43,8 +44,7 @@ const Home = () => {
                     <Box>
                         <Experiences />
                     </Box>
-
-
+                    
                     {/* Homes Items */}
 
                     <Box>

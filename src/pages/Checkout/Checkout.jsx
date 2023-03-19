@@ -4,6 +4,9 @@ import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
 import { Stack } from "@mui/system";
 import * as React from "react";
+import { useParams } from "react-router-dom";
+import Loading from "../../Components/utils/Loading";
+import { useGetHomeByIdQuery } from "../../features/api/homesApi";
 import Payment from "./Payment/Payment";
 import ReviewHouse from "./ReviewHouse";
 import WhosComming from "./WhosComming";
@@ -25,8 +28,18 @@ const Checkout = () => {
     }
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
+    setSkipped(newSkipped); 
+    
   };
+
+  
+  const { homeId } = useParams()
+  const { data, isLoading } = useGetHomeByIdQuery(homeId);
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  const { id, attributes } = data.data;
 
   return (
     <Stack container maxWidth={"lg"} marginX={"auto"}>
@@ -45,9 +58,9 @@ const Checkout = () => {
         })}
       </Stepper>
       <Box>
-        {activeStep===0 && <ReviewHouse handleNext={handleNext}/>}
-        {activeStep===1 && <WhosComming handleNext={handleNext}/>}
-        {activeStep===2 && <Payment/>}
+        {activeStep===0 && <ReviewHouse id={id} attributes={attributes} handleNext={handleNext}/>}
+        {activeStep===1 && <WhosComming id={id} attributes={attributes} handleNext={handleNext}/>}
+        {activeStep===2 && <Payment key={id} attributes={attributes}/>}
       </Box>
     </Stack>
   );

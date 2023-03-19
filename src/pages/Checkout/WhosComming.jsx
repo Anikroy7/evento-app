@@ -1,25 +1,14 @@
 import SendIcon from "@mui/icons-material/Send";
 import {
-    Avatar,
-    CardMedia,
-    TextareaAutosize, Typography
+  Avatar,
+  CardMedia,
+  TextareaAutosize, Typography
 } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import React from "react";
-import { useParams } from "react-router-dom";
-import Loading from "../../Components/utils/Loading";
-import { useGetHomeByIdQuery } from "../../features/api/homesApi";
 import ReserveCard from "../HomeDetails/ReserveCard";
 
-const WhosComming = ({handleNext}) => {
-
-  const { homeId } = useParams()
-  const { data, isLoading } = useGetHomeByIdQuery(homeId);
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  const { id, attributes } = data.data;
+const WhosComming = ({handleNext, attributes, id}) => {
 
   return (
     <Stack container maxWidth={"xl"} marginX={"auto"}>

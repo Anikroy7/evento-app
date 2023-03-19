@@ -6,24 +6,11 @@ import VapingRoomsIcon from "@mui/icons-material/VapingRooms";
 import { Box, Divider, Grid, Paper, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
-import { useParams } from "react-router-dom";
-import Loading from "../../Components/utils/Loading";
-import { useGetHomeByIdQuery } from "../../features/api/homesApi";
 import ReserveCard from "../HomeDetails/ReserveCard";
 
-const ReviewHouse = ({ handleNext }) => {
+const ReviewHouse = ({ handleNext, attributes, id }) => {
 
 
-
-  const { homeId } = useParams();
-
-  const { data, isLoading } = useGetHomeByIdQuery(homeId);
-
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  const { id, attributes } = data.data;
   
   return (
     <Grid container spacing={4}>

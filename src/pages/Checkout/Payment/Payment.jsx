@@ -1,27 +1,55 @@
-import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import React from "react";
-import CheckOutForm from "./CheckOutForm";
+import { useEffect } from "react";
+import { usePostOrderMutation } from "../../../features/api/paymentApi";
 
+const Payment = ({ attributes }) => {
+  const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_KEY);
 
-const stripePromise = loadStripe('pk_test_51L1qwxD4PFFI7RawB9Gf0codBg6vO7MkSnnQtQIPySVa6xUG5t3Gfywq69zQvRVbAm4t667sjHMC9sl5HlwO1BPr00uvEMj931');
+  const [postOrder, { isLoading, isSuccess, isError, data }] =
+    usePostOrderMutation();
 
-const Payment = () => {
-  /* const options = {
-    // passing the client secret obtained from the server
-    clientSecret: 'sk_test_51L1qwxD4PFFI7Raw4FVNW8znDOtp9R62kS4TpgL6vXPUYh6eKyfpfQh5G9LCKLA2BmnX2URFZZyOt20j3RPjBueG00UDdruAfs',
-  }; */
+  useEffect(() => {
+    if (data && data.stripeSession) {
+      console.log('I am inside use Effcect inside if');
+      const id = data.stripeSession.id
+      const redirectToCheckout = async () => {
+        const stripe = await stripePromise;
+        await stripe.redirectToCheckout({
+          sessionId: id,
+        });
+      };
+      redirectToCheckout()
+    }
+    console.log('I am inside use Effcect outside if');
+  }, [data]);
+
+  if (!isSuccess && isLoading && !data) {
+    console.log("asce");
+    return <p>Loading.....</p>;
+  }
+
+  const hadlePayment = async () => {
+    try {
+      await postOrder(attributes).unwrap();
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+  // console.log(result);
 
   return (
-    <Elements stripe={stripePromise}>
-       <CheckOutForm />
-    </Elements>
-    
+    <div>
+      <button onClick={hadlePayment}>Pay now</button>
+    </div>
   );
 };
 
 export default Payment;
-
+{
+  /* <Elements stripe={stripePromise}>
+       <CheckOutForm />
+    </Elements> */
+}
 
 /* 
 
