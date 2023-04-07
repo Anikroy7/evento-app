@@ -1,9 +1,9 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
 import Skeleton from '@mui/material/Skeleton';
+import Typography from '@mui/material/Typography';
+import PropTypes from 'prop-types';
+import * as React from 'react';
 
 
 
@@ -12,7 +12,7 @@ function ItemSkeleton({ data = [], loading = false }) {
 
 
     return (
-        <Grid container wrap="wrap">
+        <Grid wrap="wrap">
             {(loading ? Array.from(new Array(6)) : data).map((item, index) => (
                 <Box key={index} sx={{ width: 210, marginRight: 0.5, my: 5 }}>
                     {item ? (

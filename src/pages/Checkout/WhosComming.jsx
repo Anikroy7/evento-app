@@ -1,18 +1,23 @@
 import SendIcon from "@mui/icons-material/Send";
-import {
-  Avatar,
-  CardMedia,
-  TextareaAutosize, Typography
-} from "@mui/material";
+import { Avatar, CardMedia, TextareaAutosize, Typography } from "@mui/material";
 import { Box, Stack } from "@mui/system";
-import React from "react";
+import React, { useState } from "react";
+import usePayment from "../../hooks/usePayment";
 import ReserveCard from "../HomeDetails/ReserveCard";
 
-const WhosComming = ({handleNext, attributes, id}) => {
+const WhosComming = ({ attributes }) => {
+  const [message, setMessage] = useState("");
+
+  const { handlePayment } = usePayment(attributes, message);
+
 
   return (
-    <Stack container maxWidth={"xl"} marginX={"auto"}>
-      <Box display={"flex"} flexDirection={"row"} justifyContent="space-between">
+    <Stack  maxWidth={"xl"} marginX={"auto"}>
+      <Box
+        display={"flex"}
+        flexDirection={"row"}
+        justifyContent="space-between"
+      >
         <Box>
           <Box
             mt={4}
@@ -62,16 +67,17 @@ const WhosComming = ({handleNext, attributes, id}) => {
             </Box>
           </Box>
           <TextareaAutosize
+            onChange={(e) => setMessage(e.target.value)}
             aria-label="minimum height"
             minRows={10}
             placeholder="Hello roudrow can't wait to spend 4 night is your home"
-            style={{ width: 400, padding:'5px', border:'1px solid #ededed' }}
+            style={{ width: 400, padding: "5px", border: "1px solid #ededed" }}
           />
-          <Box onClick={handleNext} position={"relative"}>
+          <Box onClick={handlePayment} position={"relative"}>
             <Typography
               component={"input"}
               display={"flex"}
-              value={"Send & Continue"}
+              value={"Send & Payment"}
               color={"white"}
               mt={2}
               alignItems={"center"}
@@ -101,7 +107,7 @@ const WhosComming = ({handleNext, attributes, id}) => {
           </Box>
         </Box>
         <Box>
-            <ReserveCard data={attributes} key={id}/>
+          <ReserveCard data={attributes} />
         </Box>
       </Box>
     </Stack>

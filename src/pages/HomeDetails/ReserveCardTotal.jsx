@@ -18,7 +18,7 @@ const {price}= data
 
   return (
     <List sx={{ width: "100%", px: 2, bgcolor: "background.paper" }}>
-      <ListItem key={"value"} disableGutters>
+      <ListItem disableGutters>
         <ListItemText primary={`$${price} * ${days} nights`} />
         
         <IconButton >
@@ -27,14 +27,14 @@ const {price}= data
    
       </ListItem>
       <Divider/>
-      <ListItem key={"value"} disableGutters>
+      <ListItem disableGutters>
         <ListItemText primary={`Cleaning fee`} />
         <IconButton aria-label="comment">
         <ListItemText primary={"$136"} />
         </IconButton>
       </ListItem>
       <Divider/>
-      <ListItem key={"value"} disableGutters>
+      <ListItem disableGutters>
         <ListItemText primary={`Service fee`} />
         <IconButton aria-label="comment">
         <ListItemText primary={"$136"} />

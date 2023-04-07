@@ -1,18 +1,14 @@
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import {
-    TextField,
     Button,
-    Container,
-    Typography,
-    Link as MuiLink,
-    Grid
+    Container, Grid, Link as MuiLink, TextField, Typography
 } from '@mui/material';
-import useFormData from '../../hooks/useFrormData';
-import { useDispatch, useSelector } from 'react-redux';
-import { createUser } from '../../features/auth/authSlice';
 import { useEffect, useState } from 'react';
-import Loading from '../../Components/utils/Loading';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import ErrorSnackbar from '../../Components/utils/ErrorSnacbar';
+import Loading from '../../Components/utils/Loading';
+import { createUser } from '../../features/auth/authSlice';
+import useFormData from '../../hooks/useFrormData';
 
 const SignUp = () => {
     const [state, setState] = useState({
@@ -93,7 +89,7 @@ const SignUp = () => {
                     }
                 </Button>
             </form>
-            <Grid container justifyContent="flex-end">
+            <Grid justifyContent="flex-end">
                 <Grid item>
                     <MuiLink to="/login" component={RouterLink} variant="body2">
                         Already have an account? Login

@@ -7,10 +7,9 @@ import * as React from "react";
 import { useParams } from "react-router-dom";
 import Loading from "../../Components/utils/Loading";
 import { useGetHomeByIdQuery } from "../../features/api/homesApi";
-import Payment from "./Payment/Payment";
 import ReviewHouse from "./ReviewHouse";
 import WhosComming from "./WhosComming";
-const steps = ["Reviews House roles", "Who's comming?", "Confirm and pay"];
+const steps = ["Reviews House roles","Confirm and pay"];
 
 const Checkout = () => {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -39,10 +38,10 @@ const Checkout = () => {
     return <Loading />;
   }
 
-  const { id, attributes } = data.data;
+  const {  attributes } = data.data;
 
   return (
-    <Stack container maxWidth={"lg"} marginX={"auto"}>
+    <Stack  maxWidth={"lg"} marginX={"auto"}>
       <Stepper sx={{ width: "60%", mt: 5}} activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps = {};
@@ -58,9 +57,8 @@ const Checkout = () => {
         })}
       </Stepper>
       <Box>
-        {activeStep===0 && <ReviewHouse id={id} attributes={attributes} handleNext={handleNext}/>}
-        {activeStep===1 && <WhosComming id={id} attributes={attributes} handleNext={handleNext}/>}
-        {activeStep===2 && <Payment key={id} attributes={attributes}/>}
+        {activeStep===0 && <ReviewHouse attributes={attributes} handleNext={handleNext}/>}
+        {activeStep===1 && <WhosComming attributes={attributes} handleNext={handleNext}/>}
       </Box>
     </Stack>
   );

@@ -7,9 +7,7 @@ import * as React from "react";
 const HomeDetailsHeader = ({ data }) => {
   const {
     address,
-    category,
     image,
-    price,
     title,
     bedrooms,
     beds,

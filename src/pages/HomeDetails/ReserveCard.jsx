@@ -7,16 +7,17 @@ import ReservedCardDate from "./ReservedCardDate";
 import ReservedCardHeader from "./ReservedCardHeader";
 import ReserverCardGuests from "./ReserverCardGuests";
 
-const ReserveCard = ({ data, id }) => {
+const ReserveCard = ({ data }) => {
   
   const {pathname}= useLocation() ;
   const isHomeDetails= pathname.includes('homeDetails')
+  
   return (
     <Card sx={{ minWidth: 400 }}>
-      <ReservedCardHeader data={data} key={id}/>
+      <ReservedCardHeader data={data} />
       <ReservedCardDate />
       <ReserverCardGuests />
-      <ReserveCardTotal data= {data} key={id}/>
+      <ReserveCardTotal data={data} />
       {isHomeDetails&&<ReservedButton/>}
     </Card>
   );

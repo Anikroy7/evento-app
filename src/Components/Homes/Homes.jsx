@@ -1,12 +1,11 @@
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import { Box, Button, Typography } from '@mui/material';
 import React from 'react';
-import { useGetHomesQuery } from '../../features/api/homesApi';
 import CardItem from '../CardItem/CardItem';
 import ItemSkeleton from '../utils/Skeleton ';
 const Homes = () => {
   
-    const { data, isLoading } = useGetHomesQuery()
+
     
     return (
         <>

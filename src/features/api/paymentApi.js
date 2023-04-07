@@ -3,9 +3,9 @@ import apiSlice from "./apiSlice";
 const paymentApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     postOrder: builder.mutation({
-      query: (products) => ({
+      query: (home) => ({
         url:'/orders',
-        body:products,
+        body:home,
         method:'post',    
       }),
     }),

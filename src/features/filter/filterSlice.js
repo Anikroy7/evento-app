@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     address: "",
@@ -20,6 +20,11 @@ const filterSlice = createSlice({
             state.arrivalDate = action.payload.arrivalDate;
             state.depratureDate = action.payload.depratureDate;
             state.guests = action.payload.guests
+        },
+        setInputs:(state, action)=>{
+            state.address = action.payload.address;
+            state.arrivalDate = action.payload.arrivalDate;
+            state.depratureDate = action.payload.depratureDate;
         },
         toogleGuestQuantity: (state, action) => {
             switch (action.payload.type) {
@@ -47,6 +52,6 @@ const filterSlice = createSlice({
     }
 })
 
-export const { searchedData, toogleGuestQuantity, removeFilter } = filterSlice.actions
+export const { searchedData, toogleGuestQuantity, removeFilter, setInputs } = filterSlice.actions
 
 export default filterSlice.reducer

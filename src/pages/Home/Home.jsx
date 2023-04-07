@@ -14,9 +14,10 @@ const Home = () => {
     const handleHiddenChange = (event) => {
         setHidden(event.target.checked);
     };
+ 
 
     return (
-        <Stack container maxWidth={"xl"} marginX={"auto"}>
+        <Stack maxWidth={"xl"} marginX={"auto"}>
 
             {/* filter Section */}
             <Container maxWidth="xl" sx={{ paddingY: 2, display: 'flex', alignItems: 'center', display: { lg: 'none' } }} >
@@ -24,7 +25,6 @@ const Home = () => {
                     control={
                         <Switch checked={hidden} onChange={handleHiddenChange} color="primary" />
                     }
-                    container="true" 
                     label="Filter"
                 />
                 <FilterListIcon />

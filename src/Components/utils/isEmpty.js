@@ -1,5 +1,13 @@
 const isEmpty = (data) => {
-    return Object.values(data).every(i => i === 0);
-}
+  let v;
+  v = Object.values(data).includes("");
+  if (v) {
+    return v;
+  } else {
+    v = Object.values(data.guests).every((e) => e === 0);
+  }
+ 
+  return v
+};
 
 export default isEmpty;

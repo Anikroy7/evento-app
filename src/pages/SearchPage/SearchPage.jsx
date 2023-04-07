@@ -2,14 +2,20 @@ import { Box, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import SearchHomeCard from "../../Components/SearchHomeCard/SearchHomeCard";
+import isEmpty from "../../Components/utils/isEmpty";
 import Loading from "../../Components/utils/Loading";
 import { useGetHomesQuery } from "../../features/api/homesApi";
 
 const SearchPage = () => {
   const { isLoading, data, isSuccess } = useGetHomesQuery();
+  const navigate = useNavigate()
   const { filter } = useSelector((state) => state);
-
+   if(isEmpty(filter)){
+    console.log('come');
+    navigate('/')
+  }
   const {
     address,
     arrivalDate,
@@ -32,9 +38,8 @@ const SearchPage = () => {
 
   const totalGuests = adults + babies + childs;
 
-  console.log(filteredData);
   return (
-    <Stack container maxWidth={"xl"} marginX={"auto"}>
+    <Stack maxWidth={"xl"} marginX={"auto"}>
       <Box
         sx={{
           display: "flex",
@@ -76,10 +81,10 @@ const SearchPage = () => {
           <iframe
             width="100%"
             height="100%"
-            frameborder="0"
+            frameBorder="0"
             scrolling="no"
-            marginheight="0"
-            marginwidth="0"
+            marginHeight="0"
+            marginWidth="0"
             id="gmap_canvas"
             src="https://maps.google.com/maps?width=520&amp;height=400&amp;hl=en&amp;q=%20Rajshahi+()&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
           ></iframe>
