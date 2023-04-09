@@ -4,7 +4,9 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { usePostHomeOwnerMutation } from "../../features/api/homeOwnerApi";
-
+import {
+  useUpdateUserMutation
+} from "../../features/api/userApi";
 import { setHomeOnwerDetails } from "../../features/homeOwner/homeOwnerSlice";
 import Loading from "../utils/Loading";
 
@@ -23,6 +25,8 @@ const HostHomeRegister = () => {
     usePostHomeOwnerMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [updateMyUser] = useUpdateUserMutation();
+  const id = localStorage.getItem("id");
 
   useEffect(() => {
     if (isError && !isLoading) {
@@ -32,13 +36,19 @@ const HostHomeRegister = () => {
       console.log(data);
       dispatch(setHomeOnwerDetails({ id: data.data.id, homes: [] }));
     }
+
     if (homeOwner.id) {
       navigate("/hostHome");
-      localStorage.setItem('homeOwnerId', homeOnwer.id)
+      localStorage.setItem("homeOwnerId", homeOwner.id);
+      updateMyUser({
+        id: id,
+        home_owner: homeOwner.id,
+        email: email,
+      });
     }
   }, [error, isSuccess, homeOwner]);
-
   if (isLoading) return <Loading />;
+
   const onSubmit = (data) => {
     data.email = email;
     postHomeOwner({ data });
@@ -84,8 +94,8 @@ const HostHomeRegister = () => {
       {error ? (
         <>
           <Box color={"red"}>
-            {error?.data?.error?.details?.errors?.map((e) => (
-              <div>
+            {error?.data?.error?.details?.errors?.map((e, i) => (
+              <div key={i}>
                 <p>{e.message}</p>
               </div>
             ))}

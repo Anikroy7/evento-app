@@ -10,7 +10,7 @@ const CardItem = ({ data ,homeId}) => {
 
     const { address, category, image, price, title } = data
 
-    const getImage = image.data.attributes.formats.thumbnail.url;
+    const getImage = image?.data?.attributes.formats.thumbnail.url;
     const navigate = useNavigate()  
 
     const handleNavigate = ()=>{

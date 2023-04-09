@@ -11,12 +11,26 @@ import {
 import { Stack } from "@mui/system";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useCreateHomeMutation } from "../../features/api/homesApi";
 
 const HostHomeForm = () => {
+  const homeOwnerId = localStorage.getItem("homeOwnerId");
+
   const { register, handleSubmit, reset } = useForm();
+  const [postHome, { data }] = useCreateHomeMutation();
 
   const onSubmit = (data) => {
     console.log(data);
+    const  name = data.name;
+    const about = data.about;
+    delete data.name;
+    delete data.about;
+    const superhost = {
+      name, about
+    }
+    data.superhost= superhost;
+    data.home_owner = homeOwnerId;
+    postHome({ data: data });
   };
 
   return (
@@ -65,20 +79,53 @@ const HostHomeForm = () => {
               <MenuItem value="condo">Condo</MenuItem>
             </Select>
           </FormControl>
+          <Stack
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <TextField
+              {...register("beds", { required: true })}
+              label="Beds"
+              type="number"
+              sx={{ display: "inline", width: "30%" }}
+              margin="normal"
+            />
+            <TextField
+              label="Baths"
+              type="number"
+              sx={{ display: "inline", width: "30%" }}
+              margin="normal"
+              {...register("baths", { required: true })}
+            />
+            <TextField
+              {...register("bedrooms", { required: true })}
+              label="Bedrooms"
+              type="number"
+              sx={{ display: "inline", width: "30%" }}
+              margin="normal"
+            />
+          </Stack>
+
           <TextField
-            label="Baths"
-            type="number"
-            fullWidth
+            label="Superhost name"
+            type="text"
+            placeholder="Superhost name"
             margin="normal"
-            {...register("baths", { required: true })}
+            {...register("name", { required: true })}
+            fullWidth
           />
           <TextField
-            {...register("bedrooms", { required: true })}
-            label="Bedrooms"
-            type="number"
+            {...register("about", { required: true })}
             fullWidth
+            placeholder="About superhost..."
+            label="About superhost"
+            type="text"
             margin="normal"
           />
+
           <TextField
             label="Description"
             multiline
@@ -88,8 +135,8 @@ const HostHomeForm = () => {
             margin="normal"
           />
           <input
-            name="images"
-            {...register("images", { required: true })}
+            name="image"
+            {...register("image", { required: true })}
             type="file"
             accept="image/*"
             multiple
