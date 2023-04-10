@@ -11,9 +11,21 @@ const homeOwner = apiSlice.injectEndpoints({
     }),
     getHomeOnwerById: builder.query({
       query: (homeOnwerId) => `/home-owners/${homeOnwerId}?populate=*`,
-      providesTags:['home']
+      providesTags: ["home-owner"],
+    }),
+    updateHomeOwnerById: builder.mutation({
+      query: (data) => ({
+        url: `/home-owners/${data.homeOwnerId}`,
+        method: "put",
+        body: data.homeId,
+      }),
+      invalidatesTags:['home-owner']
     }),
   }),
 });
 
-export const { usePostHomeOwnerMutation , useGetHomeOnwerByIdQuery} = homeOwner;
+export const {
+  usePostHomeOwnerMutation,
+  useGetHomeOnwerByIdQuery,
+  useUpdateHomeOwnerByIdMutation,
+} = homeOwner;

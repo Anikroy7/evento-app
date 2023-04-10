@@ -15,10 +15,8 @@ const homesApi = apiSlice.injectEndpoints({
       }),
     }),
 
-    // providesTags: ["home"],
     getHomeById: builder.query({
       query: (homeId) => `/homes/${homeId}?populate=*`,
-      // providesTags:['home'],
     }),
     updateHomebyId: builder.mutation({
       query: (data) => ({

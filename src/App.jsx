@@ -13,22 +13,24 @@ import routes from "./routes/routes";
 function App() {
   const dispatch = useDispatch();
   const homeOwnerId = localStorage.getItem("homeOwnerId");
-  // console.log(homeOwnerId);
-  const {  isLoading, isSuccess, data } =useGetHomeOnwerByIdQuery(homeOwnerId)
-// console.log(data.data.attributes.homes);
+  const { isLoading, isSuccess, data } = useGetHomeOnwerByIdQuery(homeOwnerId);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log('current user', user.email);
+        console.log("current user", user.email);
         dispatch(setUser(user.email));
       }
+      dispatch(
+        setHomeOnwerDetails({
+          id: data?.data?.id,
+          homes: data?.data?.attributes?.homes.data,
+        })
+      );
     });
-    if (isSuccess&&data) {
-      dispatch(setHomeOnwerDetails({ id: data.data.id, homes: data.data.attributes.homes.data }));
-    }
-  }, [isSuccess, data]);
+  }, [data, isSuccess]);
 
+  console.log(isLoading);
   if (isLoading) return <Loading />;
 
   return (

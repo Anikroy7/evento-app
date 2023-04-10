@@ -13,14 +13,11 @@ import { Stack } from "@mui/system";
 import { signOut } from "firebase/auth";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Link as ReactRouterLink,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { Link as ReactRouterLink, useLocation } from "react-router-dom";
 import auth from "../../../firebase.init";
 import { useGetUserByIdQuery } from "../../features/api/userApi";
 import { logout } from "../../features/auth/authSlice";
+import { setHomeOnwerDetails } from "../../features/homeOwner/homeOwnerSlice";
 import Loading from "../utils/Loading";
 import isEmpty from "../utils/isEmpty";
 
@@ -36,7 +33,6 @@ function Navbar() {
   const { address, arrivalDate, depratureDate, guests } = filter;
   const { childs, babies, adults } = guests;
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const pages = [
     {
       name: authState.email ? "Host your home" : "",
@@ -88,12 +84,12 @@ function Navbar() {
   const { data: userInfo, isLoading } = useGetUserByIdQuery(userId);
 
   // console.log("userInfo", userInfo?.data?.attributes.home_owner.data);
-  const homeOwnerId = userInfo?.data.attributes.home_owner.data.id;
+  const homeOwnerId = userInfo?.data.attributes?.home_owner?.data?.id;
   React.useEffect(() => {
     if (homeOwnerId) {
       console.log("inside useEffect", homeOwnerId);
+      dispatch(setHomeOnwerDetails({ id: homeOwnerId, homes: [] }));
       localStorage.setItem("homeOwnerId", homeOwnerId);
-      navigate('/hostHome')
     }
   }, [userInfo, homeOwnerId]);
 

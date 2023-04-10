@@ -9,29 +9,48 @@ import {
   Typography,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useUpdateHomeOwnerByIdMutation } from "../../features/api/homeOwnerApi";
 import { useCreateHomeMutation } from "../../features/api/homesApi";
+import Loading from "../utils/Loading";
 
 const HostHomeForm = () => {
   const homeOwnerId = localStorage.getItem("homeOwnerId");
 
-  const { register, handleSubmit, reset } = useForm();
-  const [postHome, { data }] = useCreateHomeMutation();
+  const { register, handleSubmit } = useForm();
+  const [postHome, { data: homeData }] = useCreateHomeMutation();
+  const [updateHomeOwner, { isLoading, data, isError, error, isSuccess }] =
+    useUpdateHomeOwnerByIdMutation();
+  useEffect(() => {
+    if (homeData) {
+      console.log("homeData", homeData);
+      updateHomeOwner({
+        homeOwnerId: homeOwnerId,
+        homeId: homeData?.data.id,
+      });
+    }
+  }, [homeData]);
+  
+  if (isSuccess) console.log("updated data", data);
+  if (isError) console.log("updated error", error);
 
   const onSubmit = (data) => {
     console.log(data);
-    const  name = data.name;
+    const name = data.name;
     const about = data.about;
     delete data.name;
     delete data.about;
     const superhost = {
-      name, about
-    }
-    data.superhost= superhost;
+      name,
+      about,
+    };
+    data.superhost = superhost;
     data.home_owner = homeOwnerId;
     postHome({ data: data });
   };
+
+  if (isLoading) return <Loading />;
 
   return (
     <Box

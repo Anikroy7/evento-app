@@ -14,12 +14,11 @@ import Tablerow from "./TableRow";
 
 export default function MyHomes() {
 
+
   const [clicked, setClicked] = React.useState(false);
   const {
     homeOwner: { homes },
   } = useSelector((state) => state);
-
-
 
   return (
     <TableContainer component={Paper} sx={{ px: 9 }}>
