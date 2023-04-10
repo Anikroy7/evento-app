@@ -1,9 +1,9 @@
 import {
-    Button,
-    Container,
-    Link as MuiLink,
-    TextField,
-    Typography,
+  Button,
+  Container,
+  Link as MuiLink,
+  TextField,
+  Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,15 +39,12 @@ const Login = () => {
     if (error && !loading) {
       setState({ ...state, open: true });
     }
-  }, [loginEmail, error]);
-
-  useEffect(() => {
     if (isSuccess) {
-      console.log(data);
       localStorage.setItem("id", data.data.id);
       navigate("/");
     }
-  }, [isSuccess]);
+  }, [loginEmail, error, isSuccess]);
+
 
   // handle submit
   const handleSubmit = (e) => {

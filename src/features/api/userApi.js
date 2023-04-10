@@ -11,6 +11,7 @@ const userApi = apiSlice.injectEndpoints({
     }),
     getUserById: builder.query({
       query: (userId) => `/my-users/${userId}?populate=*`,
+      providesTags:['user']
     }),
     updateUser: builder.mutation({
       query: (data) => ({
@@ -23,6 +24,7 @@ const userApi = apiSlice.injectEndpoints({
         },
         method: "put",
       }),
+      invalidatesTags:['user']
     }),
   }),
 });

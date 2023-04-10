@@ -15,6 +15,7 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link as ReactRouterLink, useLocation } from "react-router-dom";
 import auth from "../../../firebase.init";
+import { useGetHomeOnwerByIdQuery } from "../../features/api/homeOwnerApi";
 import { useGetUserByIdQuery } from "../../features/api/userApi";
 import { logout } from "../../features/auth/authSlice";
 import { setHomeOnwerDetails } from "../../features/homeOwner/homeOwnerSlice";
@@ -82,16 +83,18 @@ function Navbar() {
   const userId = localStorage.getItem("id");
 
   const { data: userInfo, isLoading } = useGetUserByIdQuery(userId);
-
+  
   // console.log("userInfo", userInfo?.data?.attributes.home_owner.data);
   const homeOwnerId = userInfo?.data.attributes?.home_owner?.data?.id;
+  const {  isSuccess, data } = useGetHomeOnwerByIdQuery(homeOwnerId, {
+    refetchOnMountOrArgChange: true,
+  });
   React.useEffect(() => {
     if (homeOwnerId) {
-      console.log("inside useEffect", homeOwnerId);
-      dispatch(setHomeOnwerDetails({ id: homeOwnerId, homes: [] }));
+      dispatch(setHomeOnwerDetails({ id: homeOwnerId, homes: data?.data?.attributes?.homes.data }));
       localStorage.setItem("homeOwnerId", homeOwnerId);
     }
-  }, [userInfo, homeOwnerId]);
+  }, [userInfo, homeOwnerId, data]);
 
   if (isLoading) return <Loading />;
 

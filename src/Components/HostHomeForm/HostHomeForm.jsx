@@ -9,31 +9,57 @@ import {
   Typography,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useUpdateHomeOwnerByIdMutation } from "../../features/api/homeOwnerApi";
 import { useCreateHomeMutation } from "../../features/api/homesApi";
+import { setHomeOnwerDetails } from "../../features/homeOwner/homeOwnerSlice";
+import ErrorSnackbar from "../utils/ErrorSnacbar";
 import Loading from "../utils/Loading";
 
 const HostHomeForm = () => {
+  const [state, setState] = useState({
+    open: false,
+    vertical: "top",
+    horizontal: "right",
+  });
+  const dispatch = useDispatch();
+  const homeOwner = useSelector((state) => state.homeOwner);
+  console.log(homeOwner);
   const homeOwnerId = localStorage.getItem("homeOwnerId");
-
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
-  const [postHome, { data: homeData }] = useCreateHomeMutation();
-  const [updateHomeOwner, { isLoading, data, isError, error, isSuccess }] =
-    useUpdateHomeOwnerByIdMutation();
+  const [postHome, { data: homeData, error }] = useCreateHomeMutation();
+  const [
+    updateHomeOwner,
+    { isLoading, data, isError: updateError, error: uerror, isSuccess },
+  ] = useUpdateHomeOwnerByIdMutation();
   useEffect(() => {
     if (homeData) {
-      console.log("homeData", homeData);
+       dispatch(setHomeOnwerDetails({
+        id: homeOwner.id,
+        homes: [...homeOwner.homes, homeData.data]
+      }));
       updateHomeOwner({
         homeOwnerId: homeOwnerId,
         homeId: homeData?.data.id,
       });
+      navigate("/myHomes");
+      toast.success("Home added successfully");
     }
-  }, [homeData]);
-  
+  }, [homeData, navigate]);
+
+  useEffect(() => {
+    if (error) {
+      setState({ ...state, open: true });
+    }
+  }, [error]);
+
   if (isSuccess) console.log("updated data", data);
-  if (isError) console.log("updated error", error);
+  if (updateError) console.log("updated error", uerror);
 
   const onSubmit = (data) => {
     console.log(data);
@@ -165,6 +191,18 @@ const HostHomeForm = () => {
             Submit
           </Button>
         </form>
+        {error &&
+          error?.data?.error?.details?.errors?.map((e) => {
+            return (
+              <ErrorSnackbar
+                bgcolor={"red"}
+                key={e?.path[0]}
+                state={state}
+                message={e.message}
+              />
+            );
+          })}
+        {/* {error ? <ErrorSnackbar state={state} message={errorMsg} /> : ""} */}
       </Stack>
     </Box>
   );

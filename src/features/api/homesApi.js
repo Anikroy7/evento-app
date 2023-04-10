@@ -4,9 +4,8 @@ const homesApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getHomes: builder.query({
       query: () => "/homes?populate=*",
-      invalidatesTags: ["home"],
     }),
-
+    
     createHome: builder.mutation({
       query: (home) => ({
         url: "/homes",
@@ -15,8 +14,10 @@ const homesApi = apiSlice.injectEndpoints({
       }),
     }),
 
+    // providesTags: ["home"],
     getHomeById: builder.query({
       query: (homeId) => `/homes/${homeId}?populate=*`,
+
     }),
     updateHomebyId: builder.mutation({
       query: (data) => ({

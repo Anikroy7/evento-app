@@ -1,7 +1,7 @@
 import Snackbar from "@mui/material/Snackbar";
 import * as React from "react";
 
-const ErrorSnackbar = ({ state, message }) => {
+const ErrorSnackbar = ({ state, message, bgcolor}) => {
   const { vertical, horizontal, open } = state;
 
   const handleClose = () => {
