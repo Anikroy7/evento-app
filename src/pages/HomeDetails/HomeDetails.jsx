@@ -4,7 +4,6 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import Loading from "../../Components/utils/Loading";
 import { useGetHomeByIdQuery } from "../../features/api/homesApi";
-import HomeSlider from "../../utils/swiper/Swiper";
 import HomeDetailsDescription from "./HomeDetailsDescription";
 import HomeDetailsFacilities from "./HomeDetailsFacilities";
 import HomeDetailsHeader from "./HomeDetailsHeader";
@@ -23,7 +22,7 @@ const HomeDetails = () => {
 
   return (
     <Stack maxWidth={"lg"} marginX={"auto"}>
-      <HomeSlider images={new Array(getImage)} />
+      {/* <HomeSlider images={new Array(getImage)} /> */}
       <Grid container /* ={true} */ spacing={1}>
         <Grid item xs={12} lg={8} xl={8} md={6} sm={12}>
           <Box sx={{ color: "#7c7c7c" }} py={3}>

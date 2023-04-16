@@ -14,7 +14,7 @@ const Experiences = () => {
             </Typography>
 
             {
-                isLoading ? <ItemSkeleton loading={true} /> : <Box  mx={'auto'} sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, px: 3 }}>
+                isLoading ? <ItemSkeleton loading={true} /> : <Box  /* mx={'auto'} sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, px: 3 }} */>
                     {
                         data?.data?.slice(0, 3).map(({ attributes, id ,}) => {
                             return <CardItem key={id} name={'Experience'}  data={attributes} />

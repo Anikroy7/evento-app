@@ -1,50 +1,44 @@
 import React from "react";
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
+import "swiper/css/navigation";
+import "./styles.css";
+import { Pagination, Navigation } from "swiper";
 
-import "./swiper.css";
+import CardItem from "../../Components/CardItem/CardItem";
+import Loading from "../../Components/utils/Loading";
 
-// import required modules
-import { Pagination } from "swiper";
+const MySwiper = ({data,isLoading}) => {
 
-const HomeSlider=({images})=> {
+
+  if (isLoading) return <Loading />;
+
+  const slidesPerView = () => {
+    if (window.innerWidth > 1024) return 3;
+    else if (window.innerWidth > 768) return 2;
+    else if (window.innerWidth > 480) return 2;
+    else return 1;
+  };
+
   return (
     <>
       <Swiper
-        slidesPerView={"auto"} 
-        spaceBetween={10}
-        pagination={{
-          clickable: true,
-        }}
-        modules={[Pagination]}
+        slidesPerView={slidesPerView()}
+        navigation={true}
+        modules={[Pagination, Navigation]}
         className="mySwiper"
       >
-       {/*  {
-          images.map(image=> <SwiperSlide key={image}>
-            <img src={`${import.meta.env.VITE_IMAGE_URL}${image}`} alt="" />
-        </SwiperSlide>)
-        } */}
-        
-        <SwiperSlide>
-            <img src="https://media.istockphoto.com/id/1267792804/photo/rear-view-of-tourist-woman-sitting-on-the-bed-with-her-luggage-in-hotel-bedroom-after-check-in.jpg?s=612x612&w=0&k=20&c=pVnNOFT6_YV5FuW0Hf56ninY9GAu0TNmm1QOAuw9xa0=" alt="" />
-
-        </SwiperSlide>
-        <SwiperSlide>
-            <img src="https://media.istockphoto.com/id/1199804796/photo/portrait-of-tourist-woman-raised-her-hands-and-standing-nearly-window-looking-to-beautiful.jpg?s=612x612&w=0&k=20&c=1aFeaqMrXPu04AzjeztOoVvRmLm2lbNM5EH_f_fApng=" alt="" />
-
-        </SwiperSlide>
-        <SwiperSlide>
-            <img src="https://t3.ftcdn.net/jpg/03/56/28/66/360_F_356286682_EoXhRdHNIFYGoJegwRCeYF0Ah5mUHsIM.jpg" alt="" />
-
-        </SwiperSlide>
-       
+        {data?.data?.map(({ attributes, id }) => {
+          return (
+            <SwiperSlide key={id}>
+              <CardItem name={"Experience"} homeId={id} data={attributes} />
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
     </>
   );
-}
+};
 
-export default HomeSlider
+export default MySwiper;

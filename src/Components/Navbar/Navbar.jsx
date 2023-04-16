@@ -83,15 +83,19 @@ function Navbar() {
   const userId = localStorage.getItem("id");
 
   const { data: userInfo, isLoading } = useGetUserByIdQuery(userId);
-  
-  // console.log("userInfo", userInfo?.data?.attributes.home_owner.data);
+
   const homeOwnerId = userInfo?.data.attributes?.home_owner?.data?.id;
-  const {  isSuccess, data } = useGetHomeOnwerByIdQuery(homeOwnerId, {
+  const { data } = useGetHomeOnwerByIdQuery(homeOwnerId, {
     refetchOnMountOrArgChange: true,
   });
   React.useEffect(() => {
     if (homeOwnerId) {
-      dispatch(setHomeOnwerDetails({ id: homeOwnerId, homes: data?.data?.attributes?.homes.data }));
+      dispatch(
+        setHomeOnwerDetails({
+          id: homeOwnerId,
+          homes: data?.data?.attributes?.homes.data,
+        })
+      );
       localStorage.setItem("homeOwnerId", homeOwnerId);
     }
   }, [userInfo, homeOwnerId, data]);
@@ -160,6 +164,7 @@ function Navbar() {
                       display: "block",
                       fontWeight: "500",
                       textDecoration: "none",
+                      color: "#06472E",
                       "&:hover": {
                         color: "#06472E",
                         cursor: "pointer",
@@ -247,6 +252,7 @@ function Navbar() {
                   marginRight: 2,
                   fontWeight: "500",
                   textDecoration: "none",
+                  color: "#11998e",
                   "&:hover": {
                     color: "#06472E",
                     cursor: "pointer",
