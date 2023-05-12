@@ -6,18 +6,22 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { Stack } from "@mui/system";
 import * as React from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const SearchHomeCard = ({ data, homeId }) => {
+  const { beds, bedrooms, baths, image, title } = data;
+  const imageURL = image
+    ? image.formats.medium.url
+    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQE_EjgxXy8wsIz3IajoWaHy1lf8rQhsipkhIkkcOw_&s";
+  const { filter } = useSelector((state) => state);
   const {
-    beds,
-    bedrooms,
-    baths,
-    image,
-    title,
-    guests: { childs, babies, adults },
-  } = data;
-  const getImage = image.data.attributes.formats.thumbnail.url;
+    address,
+    arrivalDate,
+    depratureDate,
+    guests: { adults, babies, childs },
+  } = filter;
+
   const totalGuests = adults + babies + childs;
 
   const navigate = useNavigate();
@@ -49,8 +53,16 @@ const SearchHomeCard = ({ data, homeId }) => {
           <CardContent sx={{ flex: "1 0 auto" }}>
             <CardMedia
               component="img"
-              sx={{ minWidth: "250px", borderRadius: "20px" }}
-              image={`${import.meta.env.VITE_IMAGE_URL}${getImage}`}
+              sx={{
+                maxWidth: "230px",
+                minWidth: "230px",
+                borderRadius: "20px",
+              }}
+              image={
+                image
+                  ? `${import.meta.env.VITE_IMAGE_URL}${imageURL}`
+                  : imageURL
+              }
               alt="green iguana"
             />
           </CardContent>

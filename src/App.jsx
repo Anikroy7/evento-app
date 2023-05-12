@@ -32,17 +32,10 @@ function App() {
   // console.log(isLoading);
   if (isLoading) return <Loading />;
 
-  //meili serach
-  const client = new MeiliSearch({ host: "http://localhost:7700" });
-
-  client
-    .index("home")
-    .search("new")
-    .then((res) => console.log(res));
-
+  
   return (
     <>
-      <CssBaseline />
+       <CssBaseline />
       <RouterProvider router={routes} />
     </>
   );

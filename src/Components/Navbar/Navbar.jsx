@@ -28,6 +28,7 @@ function Navbar() {
     filter,
     homeOwner: { id },
   } = useSelector((state) => state);
+  console.log(authState.email);
 
   const location = useLocation();
   const pathname = location.pathname;
@@ -58,6 +59,10 @@ function Navbar() {
     {
       name: authState.email ? "" : "Signup",
       to: "signup",
+    },
+    {
+      name: authState.email ? authState.email : "",
+      to: "",
     },
   ];
 
@@ -104,15 +109,18 @@ function Navbar() {
 
   const handleLogout = (name) => {
     if (name === "Logout") {
-      signOut(auth)
-        .then(() => {
-          dispatch(logout());
-          localStorage.removeItem("homeOwnerId");
-          localStorage.removeItem("id");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      const isConfirm = window.confirm("Are you want to logout sure?");
+      if (isConfirm) {
+        signOut(auth)
+          .then(() => {
+            dispatch(logout());
+            localStorage.removeItem("homeOwnerId");
+            localStorage.removeItem("id");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     }
   };
 

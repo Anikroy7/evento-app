@@ -5,7 +5,7 @@ const homesApi = apiSlice.injectEndpoints({
     getHomes: builder.query({
       query: () => "/homes?populate=*",
     }),
-    
+
     createHome: builder.mutation({
       query: (home) => ({
         url: "/homes",
@@ -14,10 +14,17 @@ const homesApi = apiSlice.injectEndpoints({
       }),
     }),
 
+    uploadHomeImage: builder.mutation({
+      query: (data) => ({
+        url: "/upload",
+        method: "post",
+        body: data,
+      }),
+    }),
+
     // providesTags: ["home"],
     getHomeById: builder.query({
       query: (homeId) => `/homes/${homeId}?populate=*`,
-
     }),
     updateHomebyId: builder.mutation({
       query: (data) => ({
@@ -43,4 +50,5 @@ export const {
   useUpdateHomebyIdMutation,
   useDeleteHomeByIdMutation,
   useCreateHomeMutation,
+  useUploadHomeImageMutation
 } = homesApi;

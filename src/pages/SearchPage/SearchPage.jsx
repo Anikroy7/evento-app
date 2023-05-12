@@ -1,21 +1,19 @@
 import { Box, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import SearchHomeCard from "../../Components/SearchHomeCard/SearchHomeCard";
 import isEmpty from "../../Components/utils/isEmpty";
 import Loading from "../../Components/utils/Loading";
 import { useGetHomesQuery } from "../../features/api/homesApi";
+import MeiliSearch from "meilisearch";
 
 const SearchPage = () => {
   const { isLoading, data, isSuccess } = useGetHomesQuery();
-  const navigate = useNavigate()
+  const [filteredData, setFilterdData] = useState([]);
+  const navigate = useNavigate();
   const { filter } = useSelector((state) => state);
-   if(isEmpty(filter)){
-    console.log('come');
-    navigate('/')
-  }
   const {
     address,
     arrivalDate,
@@ -23,14 +21,28 @@ const SearchPage = () => {
     guests: { adults, babies, childs },
   } = filter;
 
+  const client = new MeiliSearch({ host: "http://localhost:7700" });
+
+  useEffect(() => {
+    client
+      .index("home")
+      .search(address)
+      .then((res) => {
+        const hits = res.hits;
+        setFilterdData(hits);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  if (isEmpty(filter)) {
+    console.log("come");
+    navigate("/");
+  }
+
   if (isLoading) {
     return <Loading />;
   }
-
-  const filteredData = data?.data?.filter((home) => {
-    return home.attributes.address.toLowerCase() === address.toLowerCase();
-  });
-
+   console.log('filteredData', filteredData);
   // formated Date
   const formatedDate = `${new Date(depratureDate).toLocaleString("default", {
     month: "long",
@@ -62,13 +74,16 @@ const SearchPage = () => {
           </Box>
           <Box>
             {filteredData.length > 0 ? (
-              filteredData.map((item) => (
+              filteredData.map((item) => {
+                console.log('item', item);
+                return (
                 <SearchHomeCard
                   key={item.id}
                   homeId={item.id}
-                  data={item.attributes}
+                  data={item}
                 />
-              ))
+              )
+              })
             ) : (
               <Typography mt={2} variant="h6" textAlign={"center"}>
                 No homes available..Search with another one!!!
@@ -77,7 +92,19 @@ const SearchPage = () => {
           </Box>
         </Stack>
 
-        <Box sx={{display:{sm:'none', xs:'none', lg:'block', xl:"block", md:'block'}}} width={"100%"} height={"100vh"}>
+        <Box
+          sx={{
+            display: {
+              sm: "none",
+              xs: "none",
+              lg: "block",
+              xl: "block",
+              md: "block",
+            },
+          }}
+          width={"100%"}
+          height={"100vh"}
+        >
           <iframe
             width="100%"
             height="100%"

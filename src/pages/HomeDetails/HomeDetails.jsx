@@ -9,6 +9,7 @@ import HomeDetailsFacilities from "./HomeDetailsFacilities";
 import HomeDetailsHeader from "./HomeDetailsHeader";
 import HomeDetailsReviews from "./HomeDetailsReviews";
 import ReserveCard from "./ReserveCard";
+import HomeDetailsSlider from "../../utils/swiper/HomeDetailsSlider";
 
 const HomeDetails = () => {
   const { homeId } = useParams();
@@ -22,7 +23,7 @@ const HomeDetails = () => {
 
   return (
     <Stack maxWidth={"lg"} marginX={"auto"}>
-      {/* <HomeSlider images={new Array(getImage)} /> */}
+      <HomeDetailsSlider images={new Array(getImage)}/>
       <Grid container /* ={true} */ spacing={1}>
         <Grid item xs={12} lg={8} xl={8} md={6} sm={12}>
           <Box sx={{ color: "#7c7c7c" }} py={3}>

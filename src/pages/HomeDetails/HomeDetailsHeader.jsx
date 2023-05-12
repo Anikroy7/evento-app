@@ -13,10 +13,10 @@ const HomeDetailsHeader = ({ data }) => {
     beds,
     baths,
     superhost: { name },
-    guests: { adults, babies, childs },
+    // guests: { adults, babies, childs },
   } = data;
   const getImage = image.data.attributes.formats.thumbnail.url;
-  const totalGuests = adults + babies + childs;
+  // const totalGuests = adults + babies + childs;
 
   return (
     <Card
@@ -42,7 +42,7 @@ const HomeDetailsHeader = ({ data }) => {
             gap: 1,
           }}
         >
-          <Typography component={"span"}>{totalGuests} guests</Typography>
+          {/* <Typography component={"span"}>{totalGuests} guests</Typography> */}
           <Typography component={"span"}>{bedrooms} bedrooms</Typography>
           <Typography component={"span"}>{baths} baths</Typography>
           <Typography component={"span"}>{beds} beds</Typography>

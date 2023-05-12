@@ -15,7 +15,10 @@ import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useUpdateHomeOwnerByIdMutation } from "../../features/api/homeOwnerApi";
-import { useCreateHomeMutation } from "../../features/api/homesApi";
+import {
+  useCreateHomeMutation,
+  useUploadHomeImageMutation,
+} from "../../features/api/homesApi";
 import { setHomeOnwerDetails } from "../../features/homeOwner/homeOwnerSlice";
 import ErrorSnackbar from "../utils/ErrorSnacbar";
 import Loading from "../utils/Loading";
@@ -31,22 +34,48 @@ const HostHomeForm = () => {
   console.log(homeOwner);
   const homeOwnerId = localStorage.getItem("homeOwnerId");
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      title: "my home",
+      price: 500,
+      address: "10 mirpur dhaka",
+      type: "house",
+      beds: 5,
+      baths: 4,
+      bedrooms: 4,
+      name: "Anik roy",
+      about: "He is 10 years experienced cool boy",
+      description: "this is a beautiful house",
+    },
+  });
+  const [file, setFile] = useState(null);
+
   const [postHome, { data: homeData, error }] = useCreateHomeMutation();
+  const [uploadImage, { data: uploadImageData }] = useUploadHomeImageMutation();
   const [
     updateHomeOwner,
     { isLoading, data, isError: updateError, error: uerror, isSuccess },
   ] = useUpdateHomeOwnerByIdMutation();
   useEffect(() => {
     if (homeData) {
-       dispatch(setHomeOnwerDetails({
-        id: homeOwner.id,
-        homes: [...homeOwner.homes, homeData.data]
-      }));
+      dispatch(
+        setHomeOnwerDetails({
+          id: homeOwner.id,
+          homes: [...homeOwner.homes, homeData.data],
+        })
+      );
       updateHomeOwner({
         homeOwnerId: homeOwnerId,
         homeId: homeData?.data.id,
       });
+      const formData = new FormData();
+      console.log("file", file);
+      formData.append("ref", "api::home.home");
+      formData.append("refId", homeData.data.id);
+      formData.append("field", "image");
+      formData.append("files", file);
+      console.log("files data in effect", formData.get('files'));
+      uploadImage(formData);
       navigate("/myHomes");
       toast.success("Home added successfully");
     }
@@ -62,7 +91,6 @@ const HostHomeForm = () => {
   if (updateError) console.log("updated error", uerror);
 
   const onSubmit = (data) => {
-    console.log(data);
     const name = data.name;
     const about = data.about;
     delete data.name;
@@ -73,8 +101,13 @@ const HostHomeForm = () => {
     };
     data.superhost = superhost;
     data.home_owner = homeOwnerId;
+
+    setFile(data.image[0]);
+
     postHome({ data: data });
   };
+
+
 
   if (isLoading) return <Loading />;
 
@@ -116,7 +149,7 @@ const HostHomeForm = () => {
             <InputLabel>Type</InputLabel>
             <Select
               name="type"
-              defaultValue={""}
+              defaultValue={"house"}
               {...register("homeType", { required: true })}
             >
               <MenuItem value="house">House</MenuItem>
@@ -183,6 +216,7 @@ const HostHomeForm = () => {
             name="image"
             {...register("image", { required: true })}
             type="file"
+            // onChange={handleFileInputChange}
             accept="image/*"
             multiple
             margin="normal"
