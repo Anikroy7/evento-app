@@ -21,14 +21,19 @@ const SearchPage = () => {
     guests: { adults, babies, childs },
   } = filter;
 
-  const client = new MeiliSearch({ host: "http://localhost:7700" });
-
+  //6062abda-a5aa-4414-ac91-ecd7944c0fkd
+  const client = new MeiliSearch({
+    host: "https://meilisearch-production-ace7.up.railway.app",
+    apiKey: "anik119979",
+  });
+  console.log(client);
   useEffect(() => {
     client
       .index("home")
       .search(address)
       .then((res) => {
         const hits = res.hits;
+        console.log('hits', hits);
         setFilterdData(hits);
       })
       .catch((err) => console.log(err));
@@ -42,7 +47,7 @@ const SearchPage = () => {
   if (isLoading) {
     return <Loading />;
   }
-   console.log('filteredData', filteredData);
+  console.log("filteredData", filteredData);
   // formated Date
   const formatedDate = `${new Date(depratureDate).toLocaleString("default", {
     month: "long",
@@ -75,14 +80,10 @@ const SearchPage = () => {
           <Box>
             {filteredData.length > 0 ? (
               filteredData.map((item) => {
-                console.log('item', item);
+                console.log("item", item);
                 return (
-                <SearchHomeCard
-                  key={item.id}
-                  homeId={item.id}
-                  data={item}
-                />
-              )
+                  <SearchHomeCard key={item.id} homeId={item.id} data={item} />
+                );
               })
             ) : (
               <Typography mt={2} variant="h6" textAlign={"center"}>

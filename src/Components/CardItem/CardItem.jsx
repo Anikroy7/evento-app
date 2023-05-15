@@ -25,7 +25,6 @@ const CardContent = styled("div")({
 
 const CardItem = ({ data, homeId }) => {
   const { address, category, image, price, title } = data;
-  console.log(data);
   const getImage = image?.data?.attributes?.formats?.thumbnail?.url;
 
   return (

@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 const SearchHomeCard = ({ data, homeId }) => {
   const { beds, bedrooms, baths, image, title } = data;
   const imageURL = image
-    ? image.formats.medium.url
+    ? image?.formats?.medium?.url
     : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQE_EjgxXy8wsIz3IajoWaHy1lf8rQhsipkhIkkcOw_&s";
   const { filter } = useSelector((state) => state);
   const {
