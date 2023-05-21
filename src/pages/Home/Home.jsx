@@ -77,7 +77,7 @@ const Home = () => {
           <Typography
             component={"p"}
             variant="h6"
-            sx={{ mb: 1, display: "block" }}
+            sx={{ mb: 1, mt:5, display: "block" }}
           >
             Experiences
           </Typography>

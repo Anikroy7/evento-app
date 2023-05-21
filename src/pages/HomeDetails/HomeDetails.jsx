@@ -14,16 +14,15 @@ import HomeDetailsSlider from "../../utils/swiper/HomeDetailsSlider";
 const HomeDetails = () => {
   const { homeId } = useParams();
   const { data, isLoading } = useGetHomeByIdQuery(homeId);
-
   if (isLoading) {
     return <Loading />;
   }
-  const { id, attributes } = data.data;
-  const getImage = attributes.image.data.attributes.formats.thumbnail.url;
+  const { id, attributes } = data?.data;
+  const getImage = attributes.image.data.attributes.url;
 
   return (
     <Stack maxWidth={"lg"} marginX={"auto"}>
-      <HomeDetailsSlider images={new Array(getImage)}/>
+      <HomeDetailsSlider images={new Array(getImage)} />
       <Grid container /* ={true} */ spacing={1}>
         <Grid item xs={12} lg={8} xl={8} md={6} sm={12}>
           <Box sx={{ color: "#7c7c7c" }} py={3}>

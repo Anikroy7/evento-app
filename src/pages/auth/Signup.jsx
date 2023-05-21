@@ -26,7 +26,7 @@ const SignUp = () => {
   } = useSelector((state) => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [postuser, { data, isSuccess, isLoading, isError, error: posterror }] =
+  const [postuser, { data, isSuccess,  isError, error: posterror }] =
     usePostUserMutation();
   console.log(loginEmail, isSuccess);
   useEffect(() => {

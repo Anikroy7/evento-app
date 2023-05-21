@@ -14,11 +14,9 @@ const steps = ["Reviews House roles","Confirm and pay"];
 const Checkout = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
-
   const isStepSkipped = (step) => {
     return skipped.has(step);
   };
-
   const handleNext = () => {
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
@@ -29,9 +27,7 @@ const Checkout = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped); 
     
-  };
-
-  
+  }; 
   const { homeId } = useParams()
   const { data, isLoading } = useGetHomeByIdQuery(homeId);
   if (isLoading) {

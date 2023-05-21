@@ -53,6 +53,10 @@ function Navbar() {
       to: "help",
     },
     {
+      name: "My Orders",
+      to: "myOrders",
+    },
+    {
       name: authState.email ? "Logout" : "Login",
       to: authState.email ? "" : "login",
     },

@@ -2,6 +2,7 @@ import Typography from "@mui/material/Typography";
 import { Box } from "@mui/system";
 import * as React from "react";
 import { styled } from "@mui/system";
+import { Rating } from "@mui/material";
 
 const CardWrapper = styled("div")({
   display: "flex",
@@ -9,6 +10,7 @@ const CardWrapper = styled("div")({
   alignItems: "flex-start",
   justifyContent: "space-between",
   backgroundColor: "#fff",
+  color: "black",
   borderRadius: "10px",
   overflow: "hidden",
   boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
@@ -17,27 +19,29 @@ const CardWrapper = styled("div")({
   "&:hover": {
     transform: "translateY(-5px)",
   },
+ 
 });
 
 const CardContent = styled("div")({
-  padding: "2px",
+  padding: "4px",
 });
 
 const CardItem = ({ data, homeId }) => {
-  const { address, category, image, price, title } = data;
-  const getImage = image?.data?.attributes?.formats?.thumbnail?.url;
-
+  const { address, category, price, title, image } = data;
+  console.log("price", data);
+  const getImageurl = image?.data?.attributes?.url;
+  console.log(data, "image ulr");
   return (
     <CardWrapper
-      sx={{ maxWidth: "250px", width: "auto", px: 1, minWidth: "250px" }}
+      sx={{ height:'550px'}}
     >
+      <CardContent>
       <img
-        style={{ maxHeight: "200px", minHeight:'200px', maxWidth:'300px' }}
+        style={{ maxHeight: "200px", minHeight: "300px", maxWidth: "250px" }}
         component="img"
-        src={`${import.meta.env.VITE_IMAGE_URL}${getImage}`}
+        src={getImageurl}
         alt="green iguana"
       />
-      <CardContent>
         <Box sx={{ display: "flex", mt: 1, flexDirection: "row" }}>
           <Typography variant="body2" color="#004d4d" fontWeight={700}>
             {category}-
@@ -46,7 +50,7 @@ const CardItem = ({ data, homeId }) => {
             {address}
           </Typography>
         </Box>
-        <Box>
+        <Box >
           <Typography
             gutterBottom
             fontWeight={500}
@@ -58,8 +62,11 @@ const CardItem = ({ data, homeId }) => {
           <Typography variant="body2" color="text.secondary">
             ${price} per person
           </Typography>
+          <Typography variant="body2" color="text.secondary">
+          <Rating sx={{color:'#11998e'}} size="small" name="read-only" value={5} readOnly />
+          </Typography>
         </Box>
-      </CardContent>
+      </CardContent>  
     </CardWrapper>
   );
 };

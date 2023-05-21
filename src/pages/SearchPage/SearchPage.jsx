@@ -10,7 +10,7 @@ import { useGetHomesQuery } from "../../features/api/homesApi";
 import MeiliSearch from "meilisearch";
 
 const SearchPage = () => {
-  const { isLoading, data, isSuccess } = useGetHomesQuery();
+  const { isLoading } = useGetHomesQuery();
   const [filteredData, setFilterdData] = useState([]);
   const navigate = useNavigate();
   const { filter } = useSelector((state) => state);
@@ -26,7 +26,7 @@ const SearchPage = () => {
     host: "https://meilisearch-production-ace7.up.railway.app",
     apiKey: "anik119979",
   });
-  console.log(client);
+
   useEffect(() => {
     client
       .index("home")

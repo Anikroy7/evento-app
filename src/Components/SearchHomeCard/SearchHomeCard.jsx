@@ -12,13 +12,11 @@ import { useNavigate } from "react-router-dom";
 const SearchHomeCard = ({ data, homeId }) => {
   const { beds, bedrooms, baths, image, title } = data;
   const imageURL = image
-    ? image?.formats?.medium?.url
-    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQE_EjgxXy8wsIz3IajoWaHy1lf8rQhsipkhIkkcOw_&s";
+    ? image.url
+    : "https://images.pond5.com/hotel-building-five-stars-illustration-072429683_iconl_nowm.jpeg";
+
   const { filter } = useSelector((state) => state);
   const {
-    address,
-    arrivalDate,
-    depratureDate,
     guests: { adults, babies, childs },
   } = filter;
 
@@ -55,14 +53,11 @@ const SearchHomeCard = ({ data, homeId }) => {
               component="img"
               sx={{
                 maxWidth: "230px",
+                maxHeight:'150px',
                 minWidth: "230px",
                 borderRadius: "20px",
               }}
-              image={
-                image
-                  ? `${import.meta.env.VITE_IMAGE_URL}${imageURL}`
-                  : imageURL
-              }
+              image={imageURL}
               alt="green iguana"
             />
           </CardContent>

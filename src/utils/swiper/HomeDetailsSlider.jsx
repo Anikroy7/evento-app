@@ -24,9 +24,9 @@ const HomeDetailsSlider = ({ images }) => {
           <SwiperSlide>
             <Box sx={{height:'20%', width:"50%"}}>
               <img
-                height="140px"
-                width="200px"
-                src={`${import.meta.env.VITE_IMAGE_URL}${img}`}
+                height="440px"
+                width="400px"
+                src={img}
                 alt="green iguana"
               />
             </Box>

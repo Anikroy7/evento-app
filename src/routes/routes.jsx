@@ -11,6 +11,7 @@ import MyHomes from "../pages/MyHomes/MyHomes";
 import SearchPage from "../pages/SearchPage/SearchPage";
 import Login from "../pages/auth/Login";
 import Signup from "../pages/auth/Signup";
+import MyOrders from "../pages/MyOrders/MyOrders";
 
 const routes = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ const routes = createBrowserRouter([
       {
         path: "/myHomes",
         element: <MyHomes />,
+      },
+      {
+        path: "/myOrders",
+        element: <MyOrders />,
       },
       {
         path: "/help",

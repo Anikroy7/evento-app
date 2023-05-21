@@ -1,13 +1,15 @@
 import { loadStripe } from "@stripe/stripe-js";
 import { useEffect } from "react";
 import Loading from "../Components/utils/Loading";
-import { usePostOrderMutation } from "../features/api/paymentApi";
+import { useCreateOrderMutation } from "../features/api/orderApi";
+import { useParams } from "react-router-dom";
 
-const usePayment = (attributes, message) => {
+const usePayment = (attributes,message) => {
   const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_KEY);
-
-  const [postOrder, { isLoading, isSuccess, data }] = usePostOrderMutation();
-  console.log(attributes);
+  const {homeId} = useParams();
+  const [createOrder, { isLoading, isSuccess, data }] =
+    useCreateOrderMutation();
+const userId =localStorage.getItem('id')
 
   useEffect(() => {
     if (data && data.stripeSession) {
@@ -31,12 +33,13 @@ const usePayment = (attributes, message) => {
       if (!message) {
         alert("Please say something about yourself to your host?");
       } else {
-        console.log(attributes);
-        const home= {
-          data: attributes,
-          message
+        const data= {
+          homeId,
+          userId,
+          message,
+          home: attributes
         }
-        await postOrder(home).unwrap();
+        createOrder(data);
       }
     } catch (error) {
       console.log("error", error);
