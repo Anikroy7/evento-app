@@ -8,8 +8,8 @@ import { Stack } from "@mui/system";
 import React from "react";
 import ReserveCard from "../HomeDetails/ReserveCard";
 
-const ReviewHouse = ({ handleNext, attributes }) => {
-  
+const ReviewHouse = ({ handleNext, attributes}) => {
+
   return (
     <Grid container spacing={4}>
       <Grid item xs={12} sm={12} md={6} lg={8} xl={8} mt={3} py={3}>
@@ -179,8 +179,8 @@ const ReviewHouse = ({ handleNext, attributes }) => {
           />
         </Box>
       </Grid>
-      <Grid item xs={12} sm={12} md={6} lg={4} xl={4} mt={3} py={3}>      
-        <ReserveCard data={attributes}/>
+      <Grid item xs={12} sm={12} md={6} lg={4} xl={4} mt={3} py={3}>
+        <ReserveCard data={attributes} />
       </Grid>
     </Grid>
   );

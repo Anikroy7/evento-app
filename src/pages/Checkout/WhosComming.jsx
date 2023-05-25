@@ -1,5 +1,12 @@
 import SendIcon from "@mui/icons-material/Send";
-import { Avatar, CardMedia, TextareaAutosize, Typography } from "@mui/material";
+import {
+  Avatar,
+  CardMedia,
+  Input,
+  TextField,
+  TextareaAutosize,
+  Typography,
+} from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import React, { useState } from "react";
 import usePayment from "../../hooks/usePayment";
@@ -7,12 +14,18 @@ import ReserveCard from "../HomeDetails/ReserveCard";
 
 const WhosComming = ({ attributes }) => {
   const [message, setMessage] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [totalPrice, setTotalPrice] = React.useState(0);
 
-  const { handlePayment } = usePayment(attributes, message);
-
+  const { handlePayment } = usePayment(
+    attributes,
+    message,
+    phoneNumber,
+    totalPrice
+  );
 
   return (
-    <Stack  maxWidth={"xl"} marginX={"auto"}>
+    <Stack maxWidth={"xl"} marginX={"auto"}>
       <Box
         display={"flex"}
         flexDirection={"row"}
@@ -71,8 +84,25 @@ const WhosComming = ({ attributes }) => {
             aria-label="minimum height"
             minRows={10}
             placeholder="Hello roudrow can't wait to spend 4 night is your home"
-            style={{ width: 400, padding: "5px", border: "1px solid #ededed" }}
+            style={{
+              width: 400,
+              padding: "5px",
+              border: "1px solid #ededed",
+              marginBottom: "20px",
+            }}
           />
+
+          <TextField
+            helperText="Please enter your phone number"
+            label="Phone Number"
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            sx={{
+              display: "block",
+              width: 400,
+              padding: "5px",
+            }}
+          />
+
           <Box onClick={handlePayment} position={"relative"}>
             <Typography
               component={"input"}
@@ -107,7 +137,7 @@ const WhosComming = ({ attributes }) => {
           </Box>
         </Box>
         <Box>
-          <ReserveCard data={attributes} />
+          <ReserveCard setTotalPrice={setTotalPrice} data={attributes} />
         </Box>
       </Box>
     </Stack>

@@ -3,16 +3,32 @@ import { useEffect } from "react";
 import Loading from "../Components/utils/Loading";
 import { useCreateOrderMutation } from "../features/api/orderApi";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useUpdateHomebyIdMutation } from "../features/api/homesApi";
 
-const usePayment = (attributes,message) => {
+const usePayment = (attributes, message, phoneNumber, totalPrice) => {
   const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_KEY);
-  const {homeId} = useParams();
+  const { homeId } = useParams();
+  const [updateHome]= useUpdateHomebyIdMutation()
+  const {
+    filter: {
+      arrivalDate,
+      depratureDate,
+    },
+  } = useSelector((state) => state);
   const [createOrder, { isLoading, isSuccess, data }] =
     useCreateOrderMutation();
-const userId =localStorage.getItem('id')
+
+  const userId = localStorage.getItem("id");
 
   useEffect(() => {
     if (data && data.stripeSession) {
+      updateHome({
+        id: data.data.homeId,
+        updatedData: {
+          orders: data.data.id
+        }
+      })
       const id = data.stripeSession.id;
       const redirectToCheckout = async () => {
         const stripe = await stripePromise;
@@ -33,12 +49,16 @@ const userId =localStorage.getItem('id')
       if (!message) {
         alert("Please say something about yourself to your host?");
       } else {
-        const data= {
+        const data = {
           homeId,
           userId,
+          arrivalDate,
+          depratureDate,
           message,
-          home: attributes
-        }
+          home: attributes,
+          phoneNumber,
+          totalPrice
+        };
         createOrder(data);
       }
     } catch (error) {

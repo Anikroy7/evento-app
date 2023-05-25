@@ -7,7 +7,7 @@ import ReservedCardDate from "./ReservedCardDate";
 import ReservedCardHeader from "./ReservedCardHeader";
 import ReserverCardGuests from "./ReserverCardGuests";
 
-const ReserveCard = ({ data }) => {
+const ReserveCard = ({ data, setTotalPrice }) => {
   
   const {pathname}= useLocation() ;
   const isHomeDetails= pathname.includes('homeDetails')
@@ -17,7 +17,7 @@ const ReserveCard = ({ data }) => {
       <ReservedCardHeader data={data} />
       <ReservedCardDate />
       <ReserverCardGuests />
-      <ReserveCardTotal data={data} />
+      <ReserveCardTotal data={data} setTotalPrice={setTotalPrice}/>
       {isHomeDetails&&<ReservedButton/>}
     </Card>
   );

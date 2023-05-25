@@ -9,7 +9,7 @@ import Loading from "../../Components/utils/Loading";
 import { useGetHomeByIdQuery } from "../../features/api/homesApi";
 import ReviewHouse from "./ReviewHouse";
 import WhosComming from "./WhosComming";
-const steps = ["Reviews House roles","Confirm and pay"];
+const steps = ["Reviews House roles", "Confirm and pay"];
 
 const Checkout = () => {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -25,20 +25,19 @@ const Checkout = () => {
     }
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped); 
-    
-  }; 
-  const { homeId } = useParams()
+    setSkipped(newSkipped);
+  };
+  const { homeId } = useParams();
   const { data, isLoading } = useGetHomeByIdQuery(homeId);
   if (isLoading) {
     return <Loading />;
   }
 
-  const {  attributes } = data.data;
+  const { attributes } = data.data;
 
   return (
-    <Stack  maxWidth={"lg"} marginX={"auto"}>
-      <Stepper sx={{ width: "60%", mt: 5}} activeStep={activeStep}>
+    <Stack maxWidth={"lg"} marginX={"auto"}>
+      <Stepper sx={{ width: "60%", mt: 5 }} activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
@@ -53,8 +52,15 @@ const Checkout = () => {
         })}
       </Stepper>
       <Box>
-        {activeStep===0 && <ReviewHouse attributes={attributes} handleNext={handleNext}/>}
-        {activeStep===1 && <WhosComming attributes={attributes} handleNext={handleNext}/>}
+        {activeStep === 0 && (
+          <ReviewHouse attributes={attributes} handleNext={handleNext} />
+        )}
+        {activeStep === 1 && (
+          <WhosComming
+            attributes={attributes}
+            handleNext={handleNext}
+          />
+        )}
       </Box>
     </Stack>
   );

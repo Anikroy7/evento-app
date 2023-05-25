@@ -13,10 +13,8 @@ const HomeDetailsHeader = ({ data }) => {
     beds,
     baths,
     superhost: { name },
-    // guests: { adults, babies, childs },
   } = data;
   const getImage = image.data.attributes.formats.thumbnail.url;
-  // const totalGuests = adults + babies + childs;
 
   return (
     <Card
@@ -42,7 +40,6 @@ const HomeDetailsHeader = ({ data }) => {
             gap: 1,
           }}
         >
-          {/* <Typography component={"span"}>{totalGuests} guests</Typography> */}
           <Typography component={"span"}>{bedrooms} bedrooms</Typography>
           <Typography component={"span"}>{baths} baths</Typography>
           <Typography component={"span"}>{beds} beds</Typography>
@@ -61,7 +58,7 @@ const HomeDetailsHeader = ({ data }) => {
           <CardMedia
             component="img"
             sx={{ maxWidth: "100%", maxHeight: "100%", borderRadius: "20px" }}
-            image={`${import.meta.env.VITE_IMAGE_URL}${getImage}`}
+            image={`https://png.pngtree.com/png-vector/20200724/ourmid/pngtree-men-smiling-illustration-png-image_2312657.jpg`}
             alt="green iguana"
           />
         </Avatar>

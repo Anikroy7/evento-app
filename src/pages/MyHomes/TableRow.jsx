@@ -1,15 +1,15 @@
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import {
-    Button,
-    Divider,
-    Input,
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableRow,
-    TextField,
+  Button,
+  Divider,
+  Input,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TextField,
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
@@ -18,17 +18,18 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import Loading from "../../Components/utils/Loading";
 import {
-    useDeleteHomeByIdMutation,
-    useUpdateHomebyIdMutation,
+  useDeleteHomeByIdMutation,
+  useUpdateHomebyIdMutation,
 } from "../../features/api/homesApi";
+import OrderHistory from "../../Components/OrderHistory/OrderHistory";
 
-const Tablerow = ({
-  home,
-  id,
-  clicked,
-  setClicked,
-}) => {
+const Tablerow = ({ home, id, clicked, setClicked }) => {
   const [updatedObj, setUpdatedObj] = React.useState({ ...home.attributes });
+
+  const [ohOpen, setohOpen] = React.useState(false);
+  const handleOpen = () => setohOpen(true);
+  const handleClose = () => setohOpen(false);
+
   const [edit, setEdit] = React.useState(false);
   console.log(id);
   const {
@@ -76,8 +77,7 @@ const Tablerow = ({
     if (isAgree) deleteHome(id);
   };
 
-  const handleEdit = (id) => {
-    console.log(id);
+  const handleEdit = () => {
     setEdit(true);
     setClicked(false);
   };
@@ -147,9 +147,16 @@ const Tablerow = ({
         <TableCell sx={{ display: "flex", gap: 1 }}>
           <Button
             sx={{ px: 1, py: 0, fontSize: "15px" }}
+            onClick={handleOpen}
+            variant="outlined"
+          >
+            Order History
+          </Button>
+          <Button
+            sx={{ px: 1, py: 0, fontSize: "15px" }}
             variant="outlined"
             color="primary"
-            onClick={()=>handleEdit(id)}
+            onClick={() => handleEdit(id)}
           >
             Edit
           </Button>
@@ -161,15 +168,16 @@ const Tablerow = ({
           >
             Delete
           </Button>
-              {edit && (
-                <Button
-                  onClick={() => setClicked(true)}
-                  variant="contained"
-                  color="success"
-                >
-                  Save
-                </Button>
-              )}
+
+          {edit && (
+            <Button
+              onClick={() => setClicked(true)}
+              variant="contained"
+              color="success"
+            >
+              Save
+            </Button>
+          )}
         </TableCell>
       </TableRow>
       <TableRow>
@@ -280,6 +288,13 @@ const Tablerow = ({
             </Box>
           </Collapse>
         </TableCell>
+        {ohOpen && (
+          <OrderHistory
+            ohOpen={ohOpen}
+            handleClose={handleClose}
+            handleOpen={handleOpen}
+          />
+        )}
       </TableRow>
     </>
   );

@@ -51,12 +51,11 @@ const MyOrders = () => {
   const { isLoading, data } = useGetOrdersQuery();
   const userId = localStorage.getItem("id");
   if (isLoading) return <Loading />;
-  console.log(data);
   const filteredOrder = data.data.filter((order) => {
     return order.attributes.userId.data.id == userId;
   });
+  
 
-  console.log("filteredOrder", filteredOrder);
 
   return (
     <TableContainer component={Paper} sx={{ p: 3 }}>

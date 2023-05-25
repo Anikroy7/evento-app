@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const SearchHomeCard = ({ data, homeId }) => {
-  const { beds, bedrooms, baths, image, title } = data;
+  const { beds, bedrooms, baths, image, title,price } = data;
   const imageURL = image
     ? image.url
     : "https://images.pond5.com/hotel-building-five-stars-illustration-072429683_iconl_nowm.jpeg";
@@ -119,7 +119,7 @@ const SearchHomeCard = ({ data, homeId }) => {
                 alignItems={"center"}
               >
                 <Typography fontWeight={600} component={"span"}>
-                  $52/
+                  ${price}/
                 </Typography>
                 <Typography component={"span"}>night</Typography>
               </Stack>
