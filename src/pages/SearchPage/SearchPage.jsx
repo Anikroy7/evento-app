@@ -11,8 +11,9 @@ import MeiliSearch from "meilisearch";
 
 const SearchPage = () => {
   const { isLoading } = useGetHomesQuery();
-  const [filteredData, setFilterdData] = useState([]);
+  const [allHomes, setAllHomes] = useState([]);
   const navigate = useNavigate();
+  const homeOwnerId = localStorage.getItem("homeOwnerId");
   const { filter } = useSelector((state) => state);
   const {
     address,
@@ -33,11 +34,12 @@ const SearchPage = () => {
       .search(address)
       .then((res) => {
         const hits = res.hits;
-        console.log('hits', hits);
-        setFilterdData(hits);
+        console.log("hits", hits);
+        setAllHomes(hits);
       })
       .catch((err) => console.log(err));
   }, []);
+  console.log(allHomes);
 
   if (isEmpty(filter)) {
     console.log("come");
@@ -47,7 +49,12 @@ const SearchPage = () => {
   if (isLoading) {
     return <Loading />;
   }
-  console.log("filteredData", filteredData);
+  //home.home_owner.id !== homeOwnerId
+  console.log("filteredData", allHomes);
+  const filteredData = allHomes.filter(
+    (home) => (home.home_owner.id != homeOwnerId) && (home.availableSeats > 0)
+  );
+
   // formated Date
   const formatedDate = `${new Date(depratureDate).toLocaleString("default", {
     month: "long",
@@ -71,7 +78,7 @@ const SearchPage = () => {
         <Stack width={"100%"}>
           <Box paddingX={6} paddingY={2}>
             <Typography component={"span"}>
-              250 Stays {formatedDate} {totalGuests} guests
+              {filteredData.length} Stays {formatedDate} {totalGuests} guests
             </Typography>
             <Typography mt={2} variant="h4" fontWeight={600} component={"h6"}>
               Stay in {address}

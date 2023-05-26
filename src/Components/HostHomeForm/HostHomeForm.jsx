@@ -51,7 +51,7 @@ const HostHomeForm = () => {
   const [file, setFile] = useState(null);
 
   const [postHome, { data: homeData, error }] = useCreateHomeMutation();
-  const [uploadImage, { data: uploadImageData }] = useUploadHomeImageMutation();
+  const [uploadImage] = useUploadHomeImageMutation();
   const [
     updateHomeOwner,
     { isLoading, data, isError: updateError, error: uerror, isSuccess },
@@ -69,12 +69,10 @@ const HostHomeForm = () => {
         homeId: homeData?.data.id,
       });
       const formData = new FormData();
-      console.log("file", file);
       formData.append("ref", "api::home.home");
       formData.append("refId", homeData.data.id);
       formData.append("field", "image");
       formData.append("files", file);
-      console.log("files data in effect", formData.get('files'));
       uploadImage(formData);
       navigate("/myHomes");
       toast.success("Home added successfully");
@@ -101,6 +99,7 @@ const HostHomeForm = () => {
     };
     data.superhost = superhost;
     data.home_owner = homeOwnerId;
+    data.availableSeats =data.guestsCapacity
 
     setFile(data.image[0]);
 
@@ -186,6 +185,35 @@ const HostHomeForm = () => {
               margin="normal"
             />
           </Stack>
+          <Stack
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <TextField
+              {...register("guestsCapacity", { required: true })}
+              label="Guests Capatity"
+              type="number"
+              sx={{ display: "inline", width: "30%" }}
+              margin="normal"
+            />
+            <TextField
+              label="Service Fee"
+              type="number"
+              sx={{ display: "inline", width: "30%" }}
+              margin="normal"
+              {...register("serviceFee", { required: true })}
+            />
+            <TextField
+              {...register("cleaningFee", { required: true })}
+              label="Cleaning Fee"
+              type="number"
+              sx={{ display: "inline", width: "30%" }}
+              margin="normal"
+            />
+          </Stack>
 
           <TextField
             label="Superhost name"
@@ -236,7 +264,6 @@ const HostHomeForm = () => {
               />
             );
           })}
-        {/* {error ? <ErrorSnackbar state={state} message={errorMsg} /> : ""} */}
       </Stack>
     </Box>
   );
