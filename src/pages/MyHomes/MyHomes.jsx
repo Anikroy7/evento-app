@@ -16,7 +16,6 @@ export default function MyHomes() {
   const {
     homeOwner: { homes },
   } = useSelector((state) => state);
-  console.log(homes);
   if(homes?.length===0)return <Typography sx={{p:3, textAlign:'center'}} component={'p'}>No homes available! Please <Link to={'/hostHome'}>host</Link> your home.</Typography>
   return (
     <TableContainer component={Paper} sx={{ px: 9 }}>

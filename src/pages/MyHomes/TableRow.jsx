@@ -29,9 +29,8 @@ const Tablerow = ({ home, id, clicked, setClicked }) => {
   const [ohOpen, setohOpen] = React.useState(false);
   const handleOpen = () => setohOpen(true);
   const handleClose = () => setohOpen(false);
-
   const [edit, setEdit] = React.useState(false);
-  console.log(id);
+
   const {
     attributes: {
       title,
@@ -44,19 +43,19 @@ const Tablerow = ({ home, id, clicked, setClicked }) => {
       bedrooms,
       superhost: { name, about },
       publishedAt,
+      guestsCapacity,
+      availableSeats
     },
   } = home;
   const [updateHome, { data, isLoading, isSuccess, error }] =
     useUpdateHomebyIdMutation();
-  const [deleteHome, { isSuccess: deleteSuccess, isLoading: deleteLoading }] =
-    useDeleteHomeByIdMutation();
+  const [deleteHome] = useDeleteHomeByIdMutation();
 
   const date = new Date(publishedAt).toDateString();
   const [open, setOpen] = React.useState(false);
 
   const handleOnchange = (e) => {
     if (e.target.name === "name" || e.target.name === "about") {
-      console.log("come");
       setUpdatedObj((prev) => ({
         ...prev,
         superhost: {
@@ -73,7 +72,6 @@ const Tablerow = ({ home, id, clicked, setClicked }) => {
   };
   const handleDelete = () => {
     const isAgree = window.confirm("Are you want to delete sure?");
-    console.log(isAgree);
     if (isAgree) deleteHome(id);
   };
 
@@ -192,6 +190,8 @@ const Tablerow = ({ home, id, clicked, setClicked }) => {
                   <TableRow>
                     <TableCell>Published Date</TableCell>
                     <TableCell>Description</TableCell>
+                    <TableCell>Guests Capacity</TableCell>
+                    <TableCell>Avilable Seats</TableCell>
                     <TableCell>Beds</TableCell>
                     <TableCell>Bedrooms</TableCell>
                     <TableCell>Baths</TableCell>
@@ -217,6 +217,38 @@ const Tablerow = ({ home, id, clicked, setClicked }) => {
                         />
                       ) : (
                         <Typography> {description}</Typography>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {edit ? (
+                        <TextField
+                          name="guestsCapacity"
+                          label="Guests Capacity"
+                          multiline
+                          rows={8}
+                          defaultValue={guestsCapacity}
+                          fullWidth
+                          margin="normal"
+                          onChange={(e) => handleOnchange(e)}
+                        />
+                      ) : (
+                        <Typography> {guestsCapacity}</Typography>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {edit ? (
+                        <TextField
+                          name="availableSeats"
+                          label="Available Seats"
+                          multiline
+                          rows={8}
+                          defaultValue={availableSeats}
+                          fullWidth
+                          margin="normal"
+                          onChange={(e) => handleOnchange(e)}
+                        />
+                      ) : (
+                        <Typography> {availableSeats}</Typography>
                       )}
                     </TableCell>
                     <TableCell>
@@ -293,6 +325,7 @@ const Tablerow = ({ home, id, clicked, setClicked }) => {
             ohOpen={ohOpen}
             handleClose={handleClose}
             handleOpen={handleOpen}
+            id={id}
           />
         )}
       </TableRow>

@@ -10,47 +10,44 @@ const ReserveCardTotal = ({ data, setTotalPrice }) => {
     filter: {
       depratureDate,
       arrivalDate,
-      guests: { childs, adults, babies },
+      guests: { childs, adults },
     },
   } = useSelector((state) => state);
 
   const { price, cleaningFee, serviceFee } = data;
   const days = differenceInDays(new Date(depratureDate), new Date(arrivalDate));
-  console.log(days);
 
-  const totalPriceForAdults = price * adults;
-  const totalPriceForChilds = (price / 2) * childs;
+  const totalPriceForAdults = price * adults * days;
+  const totalPriceForChilds = (price / 2) * childs * days;
   const totalPrice =
     totalPriceForAdults + totalPriceForChilds + cleaningFee + serviceFee;
   if (setTotalPrice) {
     setTotalPrice(totalPrice);
   }
-  console.log(totalPrice);
-  console.log(childs, adults, babies);
 
   return (
     <List sx={{ width: "100%", px: 2, bgcolor: "background.paper" }}>
       <ListItem disableGutters>
         <ListItemText
-          primary={`Total cost (For Adults) $${price} * ${days} nights`}
+          primary={`Total cost (Per Adults) $${price} * ${days} nights`}
         />
 
         <IconButton>
           <ListItemText
             sx={{ fontWeight: 500 }}
-            primary={`$${parseInt(days) * price}`}
+            primary={`$${totalPriceForAdults}`}
           />
         </IconButton>
       </ListItem>
       <ListItem disableGutters>
         <ListItemText
-          primary={`Total cost (For Childs) ($${price}/2) * ${days} nights`}
+          primary={`Total cost (Per Childs) ($${price}/2) * ${days} nights`}
         />
 
         <IconButton>
           <ListItemText
             sx={{ fontWeight: 500 }}
-            primary={`$${(parseInt(days) * price) / 2}`}
+            primary={`$${totalPriceForChilds}`}
           />
         </IconButton>
       </ListItem>
