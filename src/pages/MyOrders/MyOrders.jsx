@@ -8,8 +8,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useGetHomeByIdQuery } from "../../features/api/homesApi";
-import { differenceInDays } from "date-fns";
+import { useGetHomeByIdQuery, useUpdateHomebyIdMutation } from "../../features/api/homesApi";
+import { differenceInDays, formatDistance, isToday } from "date-fns";
 import { Box } from "@mui/material";
 
 function Row({ order, id: orderID }) {
@@ -21,12 +21,15 @@ function Row({ order, id: orderID }) {
       phone,
       message,
       depratureDate,
-      totalGuests
+      totalGuests,
     },
   } = order;
   const { data, isLoading } = useGetHomeByIdQuery(homeId);
 
   if (isLoading) return <Loading />;
+  const { data: updatedHome } = useGetHomeByIdQuery(homeId);
+  const [updateHome] = useUpdateHomebyIdMutation();
+  const availableSeats = updatedHome?.data?.attributes?.availableSeats;
 
   const {
     attributes: { title, address, price, image },
@@ -37,6 +40,27 @@ function Row({ order, id: orderID }) {
     new Date(depratureDate),
     new Date(arrivalDate)
   );
+
+
+//update avaliable seats after expired bokking dates
+  React.useEffect(() => {
+    if (!isToday(new Date(arrivalDate))) {
+      const distance = formatDistance(
+        new Date(arrivalDate),
+        new Date(depratureDate),
+        { includeSeconds: true }
+      );
+      if (distance == "less than 5 seconds") {
+        updateHome({
+          id: homeId,
+          updatedData: {
+            availableSeats: parseInt(availableSeats) + parseInt(totalGuests),
+          },
+        });
+      }
+    }
+  }, [depratureDate]);
+
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -100,10 +124,12 @@ const MyOrders = () => {
           </TableContainer>
         </>
       ) : (
-        <Box sx={{
-          textAlign:'center',
-          fontSize:60
-        }}>
+        <Box
+          sx={{
+            textAlign: "center",
+            fontSize: 60,
+          }}
+        >
           No orders found!!
         </Box>
       )}

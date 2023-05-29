@@ -8,6 +8,7 @@ import {
   useGetHomeByIdQuery,
   useUpdateHomebyIdMutation,
 } from "../features/api/homesApi";
+import { formatDistance } from "date-fns";
 
 const usePayment = (attributes, message, phoneNumber, totalPrice) => {
   const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_KEY);

@@ -33,11 +33,11 @@ const CardItem = ({ data, homeId }) => {
   console.log(data, "image ulr");
   return (
     <CardWrapper
-      sx={{ height:'550px'}}
+      sx={{ height:'300px'}}
     >
       <CardContent>
       <img
-        style={{ maxHeight: "200px", minHeight: "300px", maxWidth: "250px" }}
+        style={{ maxHeight: "150px", minHeight: "100px", maxWidth: "350px" , minWidth:"300px"}}
         component="img"
         src={getImageurl}
         alt="green iguana"

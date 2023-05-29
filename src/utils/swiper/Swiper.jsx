@@ -35,6 +35,7 @@ const MySwiper = ({ data, isLoading }) => {
       <Swiper
         slidesPerView={slidesPerView}
         navigation={true}
+        spaceBetween={15} 
         modules={[Pagination, Navigation]}
         className="mySwiper"
       >
