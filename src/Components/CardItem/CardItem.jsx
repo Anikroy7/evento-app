@@ -26,18 +26,16 @@ const CardContent = styled("div")({
   padding: "4px",
 });
 
-const CardItem = ({ data, homeId }) => {
+const CardItem = ({ data }) => {
   const { address, category, price, title, image } = data;
-  console.log("price", data);
   const getImageurl = image?.data?.attributes?.url;
-  console.log(data, "image ulr");
   return (
     <CardWrapper
-      sx={{ height:'300px'}}
+      sx={{ height:'350px'}}
     >
       <CardContent>
       <img
-        style={{ maxHeight: "150px", minHeight: "100px", maxWidth: "350px" , minWidth:"300px"}}
+        style={{ maxHeight: "230px", minHeight: "210px", }}
         component="img"
         src={getImageurl}
         alt="green iguana"

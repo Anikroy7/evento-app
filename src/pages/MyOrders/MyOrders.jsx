@@ -1,5 +1,11 @@
-import * as React from "react";
-import { useGetOrdersQuery } from "../../features/api/orderApi";
+import React, { useEffect, useState } from "react";
+import {
+  useGetHomeByIdQuery,
+  useUpdateHomebyIdMutation,
+} from "../../features/api/homesApi";
+import { differenceInDays, formatDistance, isToday } from "date-fns";
+import { Box } from "@mui/material";
+
 import Loading from "../../Components/utils/Loading";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,11 +14,12 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useGetHomeByIdQuery, useUpdateHomebyIdMutation } from "../../features/api/homesApi";
-import { differenceInDays, formatDistance, isToday } from "date-fns";
-import { Box } from "@mui/material";
+import { useGetOrdersQuery } from "../../features/api/orderApi";
 
 function Row({ order, id: orderID }) {
+  const [updateHome, { isLoading: updateHomeLoading }] =
+    useUpdateHomebyIdMutation();
+
   const {
     attributes: {
       stripeId,
@@ -24,16 +31,18 @@ function Row({ order, id: orderID }) {
       totalGuests,
     },
   } = order;
-  const { data, isLoading } = useGetHomeByIdQuery(homeId);
 
-  if (isLoading) return <Loading />;
-  const { data: updatedHome } = useGetHomeByIdQuery(homeId);
-  const [updateHome] = useUpdateHomebyIdMutation();
+  const { data: updatedHome, isLoading: getHomeByIdLoading } =
+    useGetHomeByIdQuery(homeId);
+
+  if (getHomeByIdLoading || updateHomeLoading) return <Loading />;
+  // console.log(updatedHome, homeId);
+
   const availableSeats = updatedHome?.data?.attributes?.availableSeats;
-
+  // console.log(updatedHome);
   const {
     attributes: { title, address, price, image },
-  } = data.data;
+  } = updatedHome.data;
   const imageURl = image.data.attributes.formats.small.url;
 
   const totalDays = differenceInDays(
@@ -41,25 +50,23 @@ function Row({ order, id: orderID }) {
     new Date(arrivalDate)
   );
 
-
 //update avaliable seats after expired bokking dates
-  React.useEffect(() => {
-    if (!isToday(new Date(arrivalDate))) {
-      const distance = formatDistance(
-        new Date(arrivalDate),
-        new Date(depratureDate),
-        { includeSeconds: true }
-      );
-      if (distance == "less than 5 seconds") {
-        updateHome({
-          id: homeId,
-          updatedData: {
-            availableSeats: parseInt(availableSeats) + parseInt(totalGuests),
-          },
-        });
-      }
+  if (isToday(new Date(arrivalDate))) {
+    const distance = formatDistance(
+      new Date(arrivalDate),
+      new Date(depratureDate),
+      { includeSeconds: true }
+    );
+    console.log(distance);
+    if (distance === "less than 5 seconds") {
+      updateHome({
+        id: homeId,
+        updatedData: {
+          availableSeats: parseInt(availableSeats) + parseInt(totalGuests),
+        },
+      });
     }
-  }, [depratureDate]);
+  }
 
   return (
     <React.Fragment>
@@ -88,6 +95,7 @@ function Row({ order, id: orderID }) {
 const MyOrders = () => {
   const { isLoading, data } = useGetOrdersQuery();
   const userId = localStorage.getItem("id");
+  // console.log(isLoading);
   if (isLoading) return <Loading />;
   const filteredOrder = data.data.filter((order) => {
     return order.attributes.userId.data.id == userId;
