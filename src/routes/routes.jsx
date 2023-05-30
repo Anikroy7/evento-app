@@ -62,10 +62,6 @@ const routes = createBrowserRouter([
         path: "/help",
         element: <HelpPage />,
       },
-      {
-        path: "/hostExperience",
-        element: <HostExperienceForm />,
-      },
     ],
   },
 ]);

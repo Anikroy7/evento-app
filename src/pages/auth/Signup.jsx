@@ -28,18 +28,18 @@ const SignUp = () => {
   const navigate = useNavigate();
   const [postuser, { data, isSuccess,  isError, error: posterror }] =
     usePostUserMutation();
-  console.log(loginEmail, isSuccess);
+  // console.log(loginEmail, isSuccess);
   useEffect(() => {
     if (loginEmail) {
-      console.log("come", loginEmail);
+      // console.log("come", loginEmail);
       postuser({ data: { email: loginEmail } });
-      console.log("data", data);
+      // console.log("data", data);
     }
     if (error && !loading) {
       setState({ ...state, open: true });
     }
     if (isError) {
-      console.log(posterror);
+      // console.log(posterror);
     }
   }, [loginEmail, error]);
 
@@ -49,7 +49,6 @@ const SignUp = () => {
       navigate("/");
     }
   }, [isSuccess]);
-  // if (isLoading) return <Loading />;
 
   // handle submit
   const handleSubmit = (e) => {

@@ -1,5 +1,6 @@
+import { Padding } from "@mui/icons-material";
 import StarIcon from "@mui/icons-material/Star";
-import { Divider, Typography } from "@mui/material";
+import { Divider, Grid, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -10,7 +11,8 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const SearchHomeCard = ({ data, homeId }) => {
-  const { beds, bedrooms, baths, image, title,price } = data;
+  const { beds, bedrooms, baths, image, title, price } = data;
+
   const imageURL = image
     ? image.url
     : "https://images.pond5.com/hotel-building-five-stars-illustration-072429683_iconl_nowm.jpeg";
@@ -43,87 +45,93 @@ const SearchHomeCard = ({ data, homeId }) => {
       <Box
         sx={{
           display: "flex",
+          flexDirection: "column",
+          paddingY: '5px',
+          "@media (min-width: 600px)": {
+            flexDirection: "row",
+          },
         }}
       >
+        <CardMedia
+          component="img"
+          sx={{
+            maxWidth: "230px",
+            maxHeight: "150px",
+            minWidth: "230px",
+            borderRadius: "20px",
+          }}
+          image={imageURL}
+          alt="green iguana"
+        />
         <Box
-          sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            flex: "1 0 auto",
+            paddingX: '10px',
+          }}
         >
-          <CardContent sx={{ flex: "1 0 auto" }}>
-            <CardMedia
-              component="img"
-              sx={{
-                maxWidth: "230px",
-                maxHeight:'150px',
-                minWidth: "230px",
-                borderRadius: "20px",
-              }}
-              image={imageURL}
-              alt="green iguana"
-            />
-          </CardContent>
-          <Box>
-            <Typography
-              variant="h6"
-              fontSize={"18px"}
-              component={"div"}
-              fontWeight={500}
-            >
-              {title}
-            </Typography>
-            <Stack
-              color={"#A6A3A3"}
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                gap: 1,
-              }}
-            >
-              <Typography component={"span"}>{totalGuests} guests</Typography>
-              <Typography component={"span"}>{bedrooms} bedrooms</Typography>
-              <Typography component={"span"}>{baths} baths</Typography>
-              <Typography component={"span"}>{beds} beds</Typography>
-            </Stack>
+          <Typography
+            variant="h6"
+            fontSize={"18px"}
+            component={"div"}
+            fontWeight={500}
+          >
+            {title}
+          </Typography>
+          <Stack
+            color={"#A6A3A3"}
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              gap: 1,
+            }}
+          >
+            <Typography component={"span"}>{totalGuests} guests</Typography>
+            <Typography component={"span"}>{bedrooms} bedrooms</Typography>
+            <Typography component={"span"}>{baths} baths</Typography>
+            <Typography component={"span"}>{beds} beds</Typography>
+          </Stack>
 
+          <Stack
+            sx={{
+              mt: "20px",
+            }}
+          >
+            <Typography color={"#A6A3A3"} component={"span"}>
+              Wifi Air Conditioning Kitchen
+            </Typography>
+          </Stack>
+
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              mt: "30px",
+            }}
+          >
             <Stack
-              sx={{
-                mt: "20px",
-              }}
+              display={"flex"}
+              flexDirection={"row"}
+              alignItems={"center"}
+              gap={1}
             >
-              <Typography color={"#A6A3A3"} component={"span"}>
-                Wifi Air Conditioning Kitchen
+              <StarIcon fontSize="13px" sx={{ color: "#93ff8d" }} />
+              <Typography fontSize={"15px"} fontWeight={800}>
+                4.9 (20)
               </Typography>
             </Stack>
-
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                mt: "30px",
-              }}
+            <Stack
+              display={"flex"}
+              gap={1}
+              flexDirection={"row"}
+              alignItems={"center"}
             >
-              <Stack
-                display={"flex"}
-                flexDirection={"row"}
-                alignItems={"center"}
-                gap={1}
-              >
-                <StarIcon fontSize="13px" sx={{ color: "#93ff8d" }} />
-                <Typography fontSize={"15px"} fontWeight={800}>
-                  4.9 (20)
-                </Typography>
-              </Stack>
-              <Stack
-                display={"flex"}
-                gap={1}
-                flexDirection={"row"}
-                alignItems={"center"}
-              >
-                <Typography fontWeight={600} component={"span"}>
-                  ${price}/
-                </Typography>
-                <Typography component={"span"}>night</Typography>
-              </Stack>
-            </Box>
+              <Typography fontWeight={600} component={"span"}>
+                ${price}/
+              </Typography>
+              <Typography component={"span"}>night</Typography>
+            </Stack>
           </Box>
         </Box>
       </Box>

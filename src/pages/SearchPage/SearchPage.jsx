@@ -34,15 +34,14 @@ const SearchPage = () => {
       .search(address)
       .then((res) => {
         const hits = res.hits;
-        console.log("hits", hits);
+        //console.log("hits", hits);
         setAllHomes(hits);
       })
       .catch((err) => console.log(err));
   }, []);
-  console.log(allHomes);
+  //console.log(allHomes);
 
   if (isEmpty(filter)) {
-    console.log("come");
     navigate("/");
   }
 
@@ -50,7 +49,7 @@ const SearchPage = () => {
     return <Loading />;
   }
   //home.home_owner.id !== homeOwnerId
-  console.log("filteredData", allHomes);
+  // //console.log("filteredData", allHomes);
   const filteredData = allHomes.filter(
     (home) => (home.home_owner.id != homeOwnerId) && (home.availableSeats > 0)
   );
@@ -87,7 +86,7 @@ const SearchPage = () => {
           <Box>
             {filteredData.length > 0 ? (
               filteredData.map((item) => {
-                console.log("item", item);
+                //console.log("item", item);
                 return (
                   <SearchHomeCard key={item.id} homeId={item.id} data={item} />
                 );

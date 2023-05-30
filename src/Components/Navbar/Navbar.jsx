@@ -28,7 +28,6 @@ function Navbar() {
     filter,
     homeOwner: { id },
   } = useSelector((state) => state);
-  console.log(authState.email);
 
   const location = useLocation();
   const pathname = location.pathname;
@@ -39,10 +38,6 @@ function Navbar() {
     {
       name: authState.email ? "Host your home" : "",
       to: "hostHomeRegister",
-    },
-    {
-      name: authState.email ? "Host your experience" : "",
-      to: "hostExperience",
     },
     {
       name: id && authState.email ? "My Homes" : "",
